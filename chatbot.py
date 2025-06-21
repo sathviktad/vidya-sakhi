@@ -6,6 +6,8 @@ import pygame
 import io
 import tempfile
 import os
+import requests
+import json
 from utils import get_language_code
 
 class ChatBot:
@@ -172,7 +174,78 @@ class ChatBot:
             return error_msg, None
     
     def get_intelligent_response(self, user_input):
-        """Generate intelligent responses based on user input content"""
+        """Generate intelligent responses using OpenRouter API"""
+        try:
+            # Try OpenRouter API first
+            openrouter_response = self.get_openrouter_response(user_input)
+            if openrouter_response:
+                return openrouter_response
+        except Exception as e:
+            st.sidebar.warning("AI service temporarily unavailable, using fallback responses")
+        
+        # Fallback to local responses
+        return self.get_local_response(user_input)
+    
+    def get_openrouter_response(self, user_input):
+        """Get response from OpenRouter API"""
+        api_key = os.getenv("OPENROUTER_KEY")
+        if not api_key:
+            return None
+        
+        # Get user's class for context
+        user_class = st.session_state.get('selected_class', 5)
+        
+        prompt = f"""You are Vidya Sakhi, a friendly AI tutor for Indian school students. 
+        
+Student's class: {user_class}
+Student's question: {user_input}
+
+Provide a helpful, educational response appropriate for class {user_class} students. 
+Keep your answer:
+- Simple and easy to understand
+- Educational and informative
+- Encouraging and supportive
+- Specific to the question asked
+- Maximum 150 words
+
+If it's a subject question, provide clear explanations with examples."""
+
+        try:
+            response = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "meta-llama/llama-3.2-3b-instruct:free",
+                    "messages": [
+                        {
+                            "role": "system", 
+                            "content": "You are Vidya Sakhi, a helpful AI tutor for Indian school students. Always be encouraging, educational, and age-appropriate."
+                        },
+                        {
+                            "role": "user", 
+                            "content": prompt
+                        }
+                    ],
+                    "max_tokens": 150,
+                    "temperature": 0.7
+                },
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                return data['choices'][0]['message']['content'].strip()
+            
+        except Exception as e:
+            pass
+        
+        return None
+    
+    def get_local_response(self, user_input):
+        """Generate local responses as fallback"""
         text_lower = user_input.lower()
         
         # Greeting responses

@@ -2,10 +2,13 @@ import streamlit as st
 import base64
 import os
 import pygame
+from streamlit_lottie import st_lottie
+import requests
 from chatbot import ChatBot
 from quiz_data import QuizModule
-from utils import get_avatar_svg, apply_theme, get_language_options
+from utils import get_avatar_svg, apply_theme, get_language_options, get_lottie_url
 from study_materials import StudyMaterials
+from auth import show_login, show_admin_panel, logout, AuthSystem
 
 # Initialize session state
 if 'messages' not in st.session_state:
@@ -26,11 +29,25 @@ if 'selected_class' not in st.session_state:
     st.session_state.selected_class = 5
 if 'selected_language' not in st.session_state:
     st.session_state.selected_language = 'English'
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
+if 'user_role' not in st.session_state:
+    st.session_state.user_role = None
 
 # Initialize modules
 chatbot = ChatBot()
 quiz_module = QuizModule()
 study_materials = StudyMaterials()
+
+def load_lottie_url(url):
+    """Load Lottie animation from URL"""
+    try:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
+    except:
+        return None
 
 def main():
     st.set_page_config(
@@ -43,8 +60,30 @@ def main():
     # Apply theme
     apply_theme(st.session_state.theme)
     
+    # Check if user is logged in
+    if not st.session_state.logged_in:
+        show_login()
+        return
+    
+    # Show appropriate interface based on user role
+    if st.session_state.user_role == "admin":
+        show_admin_interface()
+    elif st.session_state.user_role == "teacher":
+        show_teacher_interface()
+    else:  # student
+        show_student_interface()
+
+def show_student_interface():
+    """Main student interface"""
     # Sidebar
     with st.sidebar:
+        st.markdown(f"### 👋 Welcome {st.session_state.user_name}")
+        st.markdown(f"**Role:** {st.session_state.user_role.title()}")
+        
+        if st.button("🚪 Logout", use_container_width=True):
+            logout()
+        
+        st.markdown("---")
         st.markdown("### 🎯 Settings")
         
         # Class selection
@@ -83,8 +122,6 @@ def main():
         
         st.markdown("---")
         st.markdown("### 📚 Quick Access")
-        if st.button("🏠 Home", use_container_width=True):
-            st.session_state.quiz_started = False
         if st.button("🎯 New Quiz", use_container_width=True):
             st.session_state.quiz_started = False
             st.session_state.quiz_score = 0
@@ -103,10 +140,14 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    # Avatar
+    # Avatar with Lottie animation
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown(get_avatar_svg(), unsafe_allow_html=True)
+        lottie_animation = load_lottie_url(get_lottie_url())
+        if lottie_animation:
+            st_lottie(lottie_animation, height=200, key="avatar")
+        else:
+            st.markdown(get_avatar_svg(), unsafe_allow_html=True)
     
     # Main content tabs
     tab1, tab2, tab3 = st.tabs(["💬 Chat with Sakhi", "🧠 Quiz Time", "📖 Study Materials"])
@@ -120,6 +161,146 @@ def main():
     with tab3:
         study_materials_interface()
 
+def show_teacher_interface():
+    """Teacher interface with additional functionality"""
+    with st.sidebar:
+        st.markdown(f"### 👩‍🏫 Welcome {st.session_state.user_name}")
+        st.markdown(f"**Role:** {st.session_state.user_role.title()}")
+        
+        if st.button("🚪 Logout", use_container_width=True):
+            logout()
+        
+        st.markdown("---")
+        st.markdown("### 🎯 Settings")
+        
+        # Same settings as student
+        st.session_state.selected_class = st.selectbox(
+            "Select Class",
+            options=list(range(3, 13)),
+            index=st.session_state.selected_class - 3,
+            key="class_selector"
+        )
+        
+        languages = get_language_options()
+        st.session_state.selected_language = st.selectbox(
+            "Select Language",
+            options=list(languages.keys()),
+            index=list(languages.keys()).index(st.session_state.selected_language),
+            key="language_selector"
+        )
+        
+        theme_options = {"Light": "light", "Dark": "dark"}
+        selected_theme = st.selectbox(
+            "Theme",
+            options=list(theme_options.keys()),
+            index=0 if st.session_state.theme == 'light' else 1
+        )
+        if theme_options[selected_theme] != st.session_state.theme:
+            st.session_state.theme = theme_options[selected_theme]
+            st.rerun()
+        
+        st.session_state.voice_enabled = st.toggle(
+            "🔊 Voice Output",
+            value=st.session_state.voice_enabled
+        )
+    
+    # Header
+    st.markdown("""
+    <div style="text-align: center; padding: 2rem 0;">
+        <h1 style="color: #4CAF50; font-size: 3rem; margin-bottom: 0.5rem;">
+            🌟 Vidya Sakhi - Teacher Portal 🌟
+        </h1>
+        <h3 style="color: #666; font-weight: 300;">
+            Manage Study Materials & Monitor Progress
+        </h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Teacher tabs
+    tab1, tab2, tab3, tab4 = st.tabs(["📚 Manage Study Materials", "💬 Chat with Sakhi", "🧠 Quiz Time", "📊 Student Progress"])
+    
+    with tab1:
+        teacher_study_materials()
+    
+    with tab2:
+        chat_interface()
+    
+    with tab3:
+        quiz_interface()
+    
+    with tab4:
+        st.markdown("### 📊 Student Progress Dashboard")
+        st.info("Student progress tracking will be implemented here")
+
+def show_admin_interface():
+    """Admin interface"""
+    with st.sidebar:
+        st.markdown(f"### 👑 Welcome {st.session_state.user_name}")
+        st.markdown(f"**Role:** {st.session_state.user_role.title()}")
+        
+        if st.button("🚪 Logout", use_container_width=True):
+            logout()
+    
+    st.markdown("""
+    <div style="text-align: center; padding: 2rem 0;">
+        <h1 style="color: #4CAF50; font-size: 3rem; margin-bottom: 0.5rem;">
+            🌟 Vidya Sakhi - Admin Portal 🌟
+        </h1>
+        <h3 style="color: #666; font-weight: 300;">
+            System Administration & User Management
+        </h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    show_admin_panel()
+
+def teacher_study_materials():
+    """Teacher interface for managing study materials"""
+    st.markdown("### 📚 Manage Study Materials")
+    
+    # Class and subject selection
+    col1, col2 = st.columns(2)
+    with col1:
+        selected_class = st.selectbox("Select Class", list(range(3, 13)))
+    with col2:
+        subjects = ["Math", "Physics", "Chemistry", "Biology", "English", "Hindi", "Telugu", "History", "Geography", "Civics"]
+        selected_subject = st.selectbox("Select Subject", subjects)
+    
+    st.markdown("---")
+    
+    # Upload new study material
+    st.markdown("#### Upload New Study Material")
+    uploaded_file = st.file_uploader(
+        f"Upload {selected_subject} material for Class {selected_class}",
+        type=['pdf', 'doc', 'docx', 'txt']
+    )
+    
+    if uploaded_file:
+        description = st.text_area("Material Description")
+        if st.button("Save Material"):
+            # Save the uploaded file (implementation needed)
+            st.success(f"Study material for {selected_subject} - Class {selected_class} uploaded successfully!")
+    
+    st.markdown("---")
+    
+    # View existing materials
+    st.markdown("#### Existing Materials")
+    study_materials = StudyMaterials()
+    materials = study_materials.get_materials_for_class(selected_class)
+    
+    if selected_subject in materials:
+        material = materials[selected_subject]
+        st.write(f"**Description:** {material['description']}")
+        st.write("**Resources:**")
+        for resource in material.get('resources', []):
+            st.write(f"• {resource}")
+        
+        if st.button(f"Replace {selected_subject} Material"):
+            st.info("Upload new material above to replace existing content")
+    else:
+        st.info(f"No materials found for {selected_subject} - Class {selected_class}")
+        st.write("Upload new material above to add content for this subject.")
+
 def chat_interface():
     st.markdown("### 💬 Chat with Your AI Companion")
     
@@ -132,21 +313,10 @@ def chat_interface():
                 if message.get("translation"):
                     st.caption(f"*Translation: {message['translation']}*")
     
-    # Chat input
-    col1, col2 = st.columns([4, 1])
+    # Chat input with Enter key support
+    user_input = st.chat_input("Ask me anything about your studies!")
     
-    with col1:
-        user_input = st.text_input(
-            "Ask me anything about your studies!",
-            key="chat_input",
-            placeholder="Type your question here..."
-        )
-    
-    with col2:
-        ask_button = st.button("Ask Sakhi", type="primary", use_container_width=True)
-    
-    # Process input
-    if user_input and (ask_button or st.session_state.get('chat_input_enter')):
+    if user_input:
         process_chat_input(user_input)
         st.rerun()
 
@@ -237,6 +407,13 @@ def show_quiz_questions():
     # Question
     st.markdown(f"### {question['question']}")
     
+    # Voice output for question
+    if st.session_state.voice_enabled and st.button("🔊 Read Question", key=f"read_q_{current_idx}"):
+        try:
+            chatbot.speak_text(question['question'], st.session_state.selected_language)
+        except:
+            pass
+    
     # Options
     selected_option = st.radio(
         "Choose your answer:",
@@ -262,6 +439,14 @@ def show_quiz_questions():
                 'correct': question['correct_answer'],
                 'is_correct': is_correct
             })
+            
+            # Voice output for quiz feedback
+            if st.session_state.voice_enabled:
+                feedback_text = "Correct! Well done!" if is_correct else f"Incorrect. The correct answer is {question['correct_answer']}"
+                try:
+                    chatbot.speak_text(feedback_text, st.session_state.selected_language)
+                except:
+                    pass
             
             # Move to next question
             st.session_state.quiz_current += 1

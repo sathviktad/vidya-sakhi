@@ -71,6 +71,16 @@ class QuizModule:
                         'question': 'What is 9 × 6?',
                         'options': ['52', '54', '56', '58'],
                         'correct_answer': '54'
+                    },
+                    {
+                        'question': 'What is 144 ÷ 12?',
+                        'options': ['11', '12', '13', '14'],
+                        'correct_answer': '12'
+                    },
+                    {
+                        'question': 'How many sides does a pentagon have?',
+                        'options': ['4', '5', '6', '7'],
+                        'correct_answer': '5'
                     }
                 ],
                 'Science': [
@@ -90,6 +100,23 @@ class QuizModule:
                         'question': 'What is the past tense of "go"?',
                         'options': ['Goed', 'Gone', 'Went', 'Going'],
                         'correct_answer': 'Went'
+                    },
+                    {
+                        'question': 'What is a synonym for "big"?',
+                        'options': ['Small', 'Large', 'Tiny', 'Little'],
+                        'correct_answer': 'Large'
+                    },
+                    {
+                        'question': 'Which is a complete sentence?',
+                        'options': ['Running fast', 'The dog barks', 'Very happy', 'In the garden'],
+                        'correct_answer': 'The dog barks'
+                    }
+                ],
+                'Telugu': [
+                    {
+                        'question': 'తెలుగు లో "నమస్కారం" అర్థం ఏమిటి?',
+                        'options': ['వెళ్ళిపో', 'రండి', 'హలో', 'బాయ్'],
+                        'correct_answer': 'హలో'
                     }
                 ]
             },
@@ -203,11 +230,21 @@ class QuizModule:
                         'correct_answer': '3'
                     }
                 ],
-                'Regional Language': [
+                'Telugu': [
                     {
-                        'question': 'What is your mother tongue?',
-                        'options': ['Hindi', 'English', 'Regional Language', 'All of these'],
-                        'correct_answer': 'Regional Language'
+                        'question': 'తెలుగు భాషలో అక్షరాలు ఎన్ని?',
+                        'options': ['50', '52', '56', '60'],
+                        'correct_answer': '56'
+                    },
+                    {
+                        'question': 'తెలుగు రాష్ట్రం ఏది?',
+                        'options': ['కర్ణాటక', 'తమిళనాడు', 'తెలంగాణ', 'కేరళ'],
+                        'correct_answer': 'తెలంగాణ'
+                    },
+                    {
+                        'question': 'కవిసమ్రాట్ అని పిలువబడేవారు?',
+                        'options': ['విశ్వనాథ', 'తిక్కన', 'నన్నయ', 'ఎర్రన'],
+                        'correct_answer': 'విశ్వనాథ'
                     }
                 ]
             },
@@ -239,6 +276,21 @@ class QuizModule:
                         'question': 'Find the perimeter of a square with side 5 cm',
                         'options': ['15 cm', '20 cm', '25 cm', '10 cm'],
                         'correct_answer': '20 cm'
+                    },
+                    {
+                        'question': 'What is the HCF of 24 and 36?',
+                        'options': ['6', '8', '12', '18'],
+                        'correct_answer': '12'
+                    },
+                    {
+                        'question': 'If a = 3 and b = 4, what is a² + b²?',
+                        'options': ['25', '49', '16', '9'],
+                        'correct_answer': '25'
+                    },
+                    {
+                        'question': 'What is 0.25 as a fraction?',
+                        'options': ['1/2', '1/4', '1/3', '1/5'],
+                        'correct_answer': '1/4'
                     }
                 ],
                 'Science': [
@@ -261,6 +313,21 @@ class QuizModule:
                         'question': 'Which planet is known as the Red Planet?',
                         'options': ['Venus', 'Mars', 'Jupiter', 'Saturn'],
                         'correct_answer': 'Mars'
+                    },
+                    {
+                        'question': 'What is the boiling point of water?',
+                        'options': ['90°C', '100°C', '110°C', '120°C'],
+                        'correct_answer': '100°C'
+                    },
+                    {
+                        'question': 'Which gas is most abundant in Earth\'s atmosphere?',
+                        'options': ['Oxygen', 'Carbon dioxide', 'Nitrogen', 'Hydrogen'],
+                        'correct_answer': 'Nitrogen'
+                    },
+                    {
+                        'question': 'What is the smallest unit of matter?',
+                        'options': ['Molecule', 'Atom', 'Cell', 'Electron'],
+                        'correct_answer': 'Atom'
                     }
                 ],
                 'English': [
@@ -278,6 +345,16 @@ class QuizModule:
                         'question': 'What type of word is "quickly"?',
                         'options': ['Noun', 'Verb', 'Adjective', 'Adverb'],
                         'correct_answer': 'Adverb'
+                    },
+                    {
+                        'question': 'What is the superlative form of "good"?',
+                        'options': ['Gooder', 'Goodest', 'Better', 'Best'],
+                        'correct_answer': 'Best'
+                    },
+                    {
+                        'question': 'Which sentence is in passive voice?',
+                        'options': ['I wrote a letter', 'The letter was written by me', 'I am writing', 'I will write'],
+                        'correct_answer': 'The letter was written by me'
                     }
                 ],
                 'Hindi': [
@@ -290,6 +367,18 @@ class QuizModule:
                         'question': 'राम का विलोम शब्द क्या है?',
                         'options': ['श्याम', 'कृष्ण', 'रावण', 'हनुमान'],
                         'correct_answer': 'रावण'
+                    },
+                    {
+                        'question': 'हिंदी में कितने वर्ण होते हैं?',
+                        'options': ['44', '46', '48', '52'],
+                        'correct_answer': '52'
+                    }
+                ],
+                'Telugu': [
+                    {
+                        'question': 'తెలుగు భాష దేనిని కూడా పిలుస्तారు?',
+                        'options': ['దక्षिణ గंగ', 'తెనुగు', 'आंధ्র भाषा', 'सभी सही हैं'],
+                        'correct_answer': 'సभी సही हैं'
                     }
                 ],
                 'History': [
@@ -585,16 +674,16 @@ class QuizModule:
     
     def get_subjects_for_class(self, class_num):
         """Get available subjects for a given class"""
-        base_subjects = ['Math', 'Science', 'English', 'GK', 'Computers', 'Sports', 'Value Education']
+        base_subjects = ['Math', 'Science', 'English', 'Hindi', 'GK', 'Computers', 'Sports', 'Value Education']
         
         if class_num <= 5:
-            return base_subjects + ['Regional Language']
+            return base_subjects + ['Telugu']
         elif class_num <= 7:
-            return ['Math', 'Science', 'English', 'Social', 'Hindi', 'GK', 'Computers']
+            return ['Math', 'Science', 'English', 'Social', 'Hindi', 'Telugu', 'GK', 'Computers']
         elif class_num <= 8:
-            return ['Math', 'Physics', 'Chemistry', 'Biology', 'English', 'History', 'Geography', 'Civics']
+            return ['Math', 'Physics', 'Chemistry', 'Biology', 'English', 'Hindi', 'Telugu', 'History', 'Geography', 'Civics']
         elif class_num <= 10:
-            return ['Math', 'Physics', 'Chemistry', 'Biology', 'English', 'History', 'Geography', 'Civics']
+            return ['Math', 'Physics', 'Chemistry', 'Biology', 'English', 'Hindi', 'Telugu', 'History', 'Geography', 'Civics']
         else:  # Class 11-12
             return ['Physics', 'Chemistry', 'Math', 'Biology', 'English']
     

@@ -2,7 +2,7 @@ modules = ["python-3.11"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["SDL2", "SDL2_image", "SDL2_mixer", "SDL2_ttf", "fontconfig", "freetype", "glibcLocales", "libjpeg", "libpng", "pkg-config", "portmidi"]
+packages = ["SDL2", "SDL2_image", "SDL2_mixer", "SDL2_ttf", "cargo", "fontconfig", "freetype", "glibcLocales", "libiconv", "libjpeg", "libpng", "pkg-config", "portmidi", "rustc"]
 
 [deployment]
 deploymentTarget = "autoscale"
