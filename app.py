@@ -176,7 +176,10 @@ def process_chat_input(user_input):
     
     # Voice output
     if st.session_state.voice_enabled:
-        chatbot.speak_text(response, st.session_state.selected_language)
+        try:
+            chatbot.speak_text(response, st.session_state.selected_language)
+        except Exception as e:
+            pass  # Silently handle voice errors
 
 def quiz_interface():
     if not st.session_state.quiz_started:

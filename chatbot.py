@@ -299,12 +299,22 @@ class ChatBot:
             with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as tmp_file:
                 tts.save(tmp_file.name)
                 
-                # Play audio using pygame
+                # Use Streamlit's audio player
                 try:
-                    pygame.mixer.music.load(tmp_file.name)
-                    pygame.mixer.music.play()
-                except:
-                    pass
+                    with open(tmp_file.name, 'rb') as audio_file:
+                        audio_bytes = audio_file.read()
+                        st.audio(audio_bytes, format='audio/mp3', autoplay=True)
+                except Exception as e:
+                    # Fallback to pygame
+                    try:
+                        pygame.mixer.music.load(tmp_file.name)
+                        pygame.mixer.music.play()
+                        
+                        # Wait a bit for playback to start
+                        import time
+                        time.sleep(0.5)
+                    except:
+                        pass
                 
                 # Clean up
                 try:
@@ -313,5 +323,5 @@ class ChatBot:
                     pass
                     
         except Exception as e:
-            # Silently fail for voice output
-            pass
+            # Show warning in sidebar for voice issues
+            st.sidebar.warning("Voice output temporarily unavailable")

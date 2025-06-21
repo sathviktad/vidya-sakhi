@@ -66,6 +66,28 @@ class StudyMaterials:
                         'Living and non-living things'
                     ]
                 },
+                'English': {
+                    'description': '📚 Grammar, vocabulary, and reading comprehension',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Parts of speech',
+                        'Sentence formation',
+                        'Reading comprehension',
+                        'Vocabulary building',
+                        'Basic essay writing'
+                    ]
+                },
+                'Hindi': {
+                    'description': '🔤 हिंदी व्याकरण और साहित्य',
+                    'sample_pdf': True,
+                    'resources': [
+                        'वर्ण विचार',
+                        'शब्द भेद',
+                        'वाक्य निर्माण',
+                        'छोटी कहानियां',
+                        'कविताएं'
+                    ]
+                },
                 'History': {
                     'description': '🏛️ Ancient civilizations and Indian history',
                     'sample_pdf': True,
@@ -84,6 +106,17 @@ class StudyMaterials:
                         'Continents and oceans',
                         'Climate and weather',
                         'Natural resources'
+                    ]
+                },
+                'Civics': {
+                    'description': '🏛️ Understanding government and citizenship',
+                    'sample_pdf': True,
+                    'resources': [
+                        'What is government',
+                        'Local government',
+                        'State government',
+                        'Central government',
+                        'Rights and duties'
                     ]
                 }
             },
@@ -189,6 +222,270 @@ class StudyMaterials:
                         'Cell structure and function',
                         'Plant physiology',
                         'Human physiology'
+                    ]
+                }
+            },
+            4: {
+                'Math': {
+                    'description': '🧮 Basic arithmetic and simple geometry',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Multiplication tables up to 12',
+                        'Division concepts',
+                        'Basic fractions',
+                        'Area and perimeter'
+                    ]
+                },
+                'Science': {
+                    'description': '🔬 Animals, plants, and basic science concepts',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Animal classification',
+                        'Plant life cycle',
+                        'Food chains',
+                        'Weather patterns'
+                    ]
+                },
+                'English': {
+                    'description': '📚 Reading, writing, and grammar',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Story comprehension',
+                        'Creative writing',
+                        'Grammar basics',
+                        'Vocabulary expansion'
+                    ]
+                }
+            },
+            5: {
+                'Math': {
+                    'description': '🧮 Advanced arithmetic and introduction to algebra',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Decimal operations',
+                        'Percentage basics',
+                        'Simple equations',
+                        'Data interpretation'
+                    ]
+                },
+                'Science': {
+                    'description': '⚗️ Earth science and human body',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Solar system',
+                        'Human body systems',
+                        'Natural disasters',
+                        'Environmental science'
+                    ]
+                },
+                'English': {
+                    'description': '📖 Literature and advanced grammar',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Poetry appreciation',
+                        'Essay writing',
+                        'Advanced grammar',
+                        'Reading comprehension'
+                    ]
+                }
+            },
+            7: {
+                'Math': {
+                    'description': '🧮 Algebra, geometry, and data handling',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Linear equations',
+                        'Congruence of triangles',
+                        'Practical geometry',
+                        'Data handling and statistics'
+                    ]
+                },
+                'Science': {
+                    'description': '⚗️ Physics and chemistry fundamentals',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Heat and temperature',
+                        'Acids, bases and salts',
+                        'Nutrition in plants',
+                        'Weather, climate and adaptations'
+                    ]
+                },
+                'English': {
+                    'description': '📚 Advanced language skills',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Poetry and prose',
+                        'Grammar and composition',
+                        'Reading comprehension',
+                        'Creative writing'
+                    ]
+                },
+                'Hindi': {
+                    'description': '🔤 हिंदी साहित्य और व्याकरण',
+                    'sample_pdf': True,
+                    'resources': [
+                        'गद्य और पद्य',
+                        'व्याकरण के नियम',
+                        'रचना कार्य',
+                        'भाषा विकास'
+                    ]
+                }
+            },
+            8: {
+                'Math': {
+                    'description': '📐 Advanced algebra and geometry',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Rational numbers',
+                        'Linear equations in one variable',
+                        'Quadrilaterals',
+                        'Mensuration'
+                    ]
+                },
+                'Physics': {
+                    'description': '⚡ Force, pressure, and energy',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Force and pressure',
+                        'Friction',
+                        'Sound',
+                        'Chemical effects of electric current'
+                    ]
+                },
+                'Chemistry': {
+                    'description': '🧪 Materials and chemical reactions',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Materials - metals and non-metals',
+                        'Coal and petroleum',
+                        'Combustion and flame',
+                        'Synthetic fibres and plastics'
+                    ]
+                },
+                'Biology': {
+                    'description': '🦠 Cell structure and life processes',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Cell - structure and functions',
+                        'Microorganisms',
+                        'Crop production and management',
+                        'Reproduction in animals'
+                    ]
+                }
+            },
+            10: {
+                'Math': {
+                    'description': '🧮 Board level mathematics',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Real numbers',
+                        'Polynomials',
+                        'Coordinate geometry',
+                        'Trigonometry',
+                        'Statistics and probability'
+                    ]
+                },
+                'Physics': {
+                    'description': '⚡ Mechanics, optics, and electricity',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Light - reflection and refraction',
+                        'Electricity',
+                        'Magnetic effects of electric current',
+                        'Sources of energy'
+                    ]
+                },
+                'Chemistry': {
+                    'description': '⚛️ Chemical reactions and periodic classification',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Chemical reactions and equations',
+                        'Acids, bases and salts',
+                        'Metals and non-metals',
+                        'Carbon and its compounds'
+                    ]
+                },
+                'Biology': {
+                    'description': '🧬 Life processes and heredity',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Life processes',
+                        'Control and coordination',
+                        'Heredity and evolution',
+                        'Natural resource management'
+                    ]
+                }
+            },
+            12: {
+                'Physics': {
+                    'description': '🔬 Advanced physics for competitive exams',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Electrostatics',
+                        'Current electricity',
+                        'Magnetic effects of current',
+                        'Electromagnetic induction',
+                        'Alternating current',
+                        'Electromagnetic waves',
+                        'Ray optics and optical instruments',
+                        'Wave optics',
+                        'Dual nature of radiation',
+                        'Atoms and nuclei',
+                        'Semiconductor electronics'
+                    ]
+                },
+                'Chemistry': {
+                    'description': '⚛️ Physical, organic, and inorganic chemistry',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Solid state',
+                        'Solutions',
+                        'Electrochemistry',
+                        'Chemical kinetics',
+                        'Surface chemistry',
+                        'Coordination compounds',
+                        'Haloalkanes and haloarenes',
+                        'Alcohols, phenols and ethers',
+                        'Aldehydes, ketones and carboxylic acids',
+                        'Amines'
+                    ]
+                },
+                'Math': {
+                    'description': '🔢 Advanced mathematics for engineering entrance',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Relations and functions',
+                        'Inverse trigonometric functions',
+                        'Matrices and determinants',
+                        'Continuity and differentiability',
+                        'Applications of derivatives',
+                        'Integrals',
+                        'Applications of integrals',
+                        'Differential equations',
+                        'Vector algebra',
+                        'Three dimensional geometry',
+                        'Linear programming',
+                        'Probability'
+                    ]
+                },
+                'Biology': {
+                    'description': '🧬 Advanced biology for medical entrance',
+                    'sample_pdf': True,
+                    'resources': [
+                        'Reproduction in organisms',
+                        'Sexual reproduction in flowering plants',
+                        'Human reproduction',
+                        'Reproductive health',
+                        'Principles of inheritance and variation',
+                        'Molecular basis of inheritance',
+                        'Evolution',
+                        'Human health and disease',
+                        'Microbes in human welfare',
+                        'Biotechnology principles',
+                        'Organisms and populations',
+                        'Ecosystem',
+                        'Biodiversity and conservation',
+                        'Environmental issues'
                     ]
                 }
             }

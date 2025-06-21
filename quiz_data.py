@@ -6,6 +6,93 @@ class QuizModule:
     def __init__(self):
         self.translator = Translate()
         self.questions_data = {
+            # Copy data for classes 4 and 5 (same as class 3 with slight variations)
+            4: {
+                'Math': [
+                    {
+                        'question': 'What is 7 + 6?',
+                        'options': ['12', '13', '14', '15'],
+                        'correct_answer': '13'
+                    },
+                    {
+                        'question': 'How many sides does a rectangle have?',
+                        'options': ['3', '4', '5', '6'],
+                        'correct_answer': '4'
+                    },
+                    {
+                        'question': 'What is 16 - 8?',
+                        'options': ['6', '7', '8', '9'],
+                        'correct_answer': '8'
+                    },
+                    {
+                        'question': 'What is 3 × 5?',
+                        'options': ['12', '15', '18', '20'],
+                        'correct_answer': '15'
+                    }
+                ],
+                'Science': [
+                    {
+                        'question': 'What do we get from bees?',
+                        'options': ['Milk', 'Honey', 'Eggs', 'Wool'],
+                        'correct_answer': 'Honey'
+                    },
+                    {
+                        'question': 'Which sense organ do we use to see?',
+                        'options': ['Nose', 'Ears', 'Eyes', 'Tongue'],
+                        'correct_answer': 'Eyes'
+                    }
+                ],
+                'English': [
+                    {
+                        'question': 'What is the first letter of the alphabet?',
+                        'options': ['B', 'A', 'C', 'D'],
+                        'correct_answer': 'A'
+                    },
+                    {
+                        'question': 'Which is a vowel?',
+                        'options': ['B', 'C', 'E', 'F'],
+                        'correct_answer': 'E'
+                    }
+                ]
+            },
+            5: {
+                'Math': [
+                    {
+                        'question': 'What is 12 ÷ 3?',
+                        'options': ['3', '4', '5', '6'],
+                        'correct_answer': '4'
+                    },
+                    {
+                        'question': 'How many minutes are in one hour?',
+                        'options': ['50', '60', '70', '80'],
+                        'correct_answer': '60'
+                    },
+                    {
+                        'question': 'What is 9 × 6?',
+                        'options': ['52', '54', '56', '58'],
+                        'correct_answer': '54'
+                    }
+                ],
+                'Science': [
+                    {
+                        'question': 'What is the hardest natural substance?',
+                        'options': ['Gold', 'Iron', 'Diamond', 'Silver'],
+                        'correct_answer': 'Diamond'
+                    },
+                    {
+                        'question': 'Which gas do we breathe in?',
+                        'options': ['Carbon dioxide', 'Oxygen', 'Nitrogen', 'Hydrogen'],
+                        'correct_answer': 'Oxygen'
+                    }
+                ],
+                'English': [
+                    {
+                        'question': 'What is the past tense of "go"?',
+                        'options': ['Goed', 'Gone', 'Went', 'Going'],
+                        'correct_answer': 'Went'
+                    }
+                ]
+            },
             # Class 3-5 Questions (Basic Level)
             3: {
                 'Math': [
@@ -65,6 +152,16 @@ class QuizModule:
                         'question': 'What do plants need to grow?',
                         'options': ['Only water', 'Only sunlight', 'Water and sunlight', 'Only soil'],
                         'correct_answer': 'Water and sunlight'
+                    },
+                    {
+                        'question': 'Which animal gives us milk?',
+                        'options': ['Dog', 'Cat', 'Cow', 'Lion'],
+                        'correct_answer': 'Cow'
+                    },
+                    {
+                        'question': 'How many seasons are there in a year?',
+                        'options': ['2', '3', '4', '5'],
+                        'correct_answer': '4'
                     }
                 ],
                 'English': [
@@ -77,6 +174,40 @@ class QuizModule:
                         'question': 'What is the opposite of "hot"?',
                         'options': ['Warm', 'Cool', 'Cold', 'Mild'],
                         'correct_answer': 'Cold'
+                    },
+                    {
+                        'question': 'Which word rhymes with "cat"?',
+                        'options': ['Dog', 'Hat', 'Run', 'Sun'],
+                        'correct_answer': 'Hat'
+                    },
+                    {
+                        'question': 'What comes after the letter M?',
+                        'options': ['L', 'N', 'O', 'P'],
+                        'correct_answer': 'N'
+                    }
+                ],
+                'GK': [
+                    {
+                        'question': 'Who is known as the Father of our Nation?',
+                        'options': ['Nehru', 'Gandhi', 'Patel', 'Bose'],
+                        'correct_answer': 'Gandhi'
+                    },
+                    {
+                        'question': 'What is the national bird of India?',
+                        'options': ['Crow', 'Peacock', 'Eagle', 'Parrot'],
+                        'correct_answer': 'Peacock'
+                    },
+                    {
+                        'question': 'How many colors are in the Indian flag?',
+                        'options': ['2', '3', '4', '5'],
+                        'correct_answer': '3'
+                    }
+                ],
+                'Regional Language': [
+                    {
+                        'question': 'What is your mother tongue?',
+                        'options': ['Hindi', 'English', 'Regional Language', 'All of these'],
+                        'correct_answer': 'Regional Language'
                     }
                 ]
             },
@@ -98,6 +229,16 @@ class QuizModule:
                         'question': 'What is the area of a rectangle with length 8 and width 6?',
                         'options': ['14', '28', '48', '56'],
                         'correct_answer': '48'
+                    },
+                    {
+                        'question': 'What is 3/4 + 1/4?',
+                        'options': ['4/8', '1', '4/4', '2/4'],
+                        'correct_answer': '1'
+                    },
+                    {
+                        'question': 'Find the perimeter of a square with side 5 cm',
+                        'options': ['15 cm', '20 cm', '25 cm', '10 cm'],
+                        'correct_answer': '20 cm'
                     }
                 ],
                 'Science': [
@@ -110,6 +251,45 @@ class QuizModule:
                         'question': 'Which organ pumps blood in the human body?',
                         'options': ['Brain', 'Lungs', 'Heart', 'Liver'],
                         'correct_answer': 'Heart'
+                    },
+                    {
+                        'question': 'What gas do plants release during photosynthesis?',
+                        'options': ['Carbon dioxide', 'Oxygen', 'Nitrogen', 'Hydrogen'],
+                        'correct_answer': 'Oxygen'
+                    },
+                    {
+                        'question': 'Which planet is known as the Red Planet?',
+                        'options': ['Venus', 'Mars', 'Jupiter', 'Saturn'],
+                        'correct_answer': 'Mars'
+                    }
+                ],
+                'English': [
+                    {
+                        'question': 'What is the plural of "child"?',
+                        'options': ['Childs', 'Children', 'Childes', 'Childern'],
+                        'correct_answer': 'Children'
+                    },
+                    {
+                        'question': 'Which is a proper noun?',
+                        'options': ['city', 'Delhi', 'book', 'tree'],
+                        'correct_answer': 'Delhi'
+                    },
+                    {
+                        'question': 'What type of word is "quickly"?',
+                        'options': ['Noun', 'Verb', 'Adjective', 'Adverb'],
+                        'correct_answer': 'Adverb'
+                    }
+                ],
+                'Hindi': [
+                    {
+                        'question': 'कौन सा वर्ण स्वर है?',
+                        'options': ['क', 'अ', 'च', 'म'],
+                        'correct_answer': 'अ'
+                    },
+                    {
+                        'question': 'राम का विलोम शब्द क्या है?',
+                        'options': ['श्याम', 'कृष्ण', 'रावण', 'हनुमान'],
+                        'correct_answer': 'रावण'
                     }
                 ],
                 'History': [
@@ -117,6 +297,11 @@ class QuizModule:
                         'question': 'Who was the first Prime Minister of India?',
                         'options': ['Mahatma Gandhi', 'Jawaharlal Nehru', 'Sardar Patel', 'Dr. Rajendra Prasad'],
                         'correct_answer': 'Jawaharlal Nehru'
+                    },
+                    {
+                        'question': 'In which year did India gain independence?',
+                        'options': ['1945', '1946', '1947', '1948'],
+                        'correct_answer': '1947'
                     }
                 ],
                 'Geography': [
@@ -124,6 +309,23 @@ class QuizModule:
                         'question': 'Which is the largest continent?',
                         'options': ['Africa', 'Asia', 'Europe', 'North America'],
                         'correct_answer': 'Asia'
+                    },
+                    {
+                        'question': 'Which river is known as the Ganga of South India?',
+                        'options': ['Krishna', 'Godavari', 'Kaveri', 'Narmada'],
+                        'correct_answer': 'Godavari'
+                    }
+                ],
+                'Civics': [
+                    {
+                        'question': 'How many fundamental rights are there in Indian Constitution?',
+                        'options': ['5', '6', '7', '8'],
+                        'correct_answer': '6'
+                    },
+                    {
+                        'question': 'Who is the head of the state government?',
+                        'options': ['Governor', 'Chief Minister', 'President', 'Prime Minister'],
+                        'correct_answer': 'Governor'
                     }
                 ]
             },
@@ -275,6 +477,109 @@ class QuizModule:
                         'correct_answer': 'DNA polymerase'
                     }
                 ]
+            },
+            
+            # Class 7 Questions
+            7: {
+                'Math': [
+                    {
+                        'question': 'What is the value of (-5) + (-3)?',
+                        'options': ['-8', '-2', '2', '8'],
+                        'correct_answer': '-8'
+                    },
+                    {
+                        'question': 'The sum of angles in a triangle is:',
+                        'options': ['90°', '180°', '270°', '360°'],
+                        'correct_answer': '180°'
+                    }
+                ],
+                'Science': [
+                    {
+                        'question': 'Which acid is present in lemon?',
+                        'options': ['Acetic acid', 'Citric acid', 'Sulphuric acid', 'Hydrochloric acid'],
+                        'correct_answer': 'Citric acid'
+                    }
+                ],
+                'English': [
+                    {
+                        'question': 'What is a metaphor?',
+                        'options': ['Direct comparison', 'Indirect comparison', 'Question', 'Statement'],
+                        'correct_answer': 'Indirect comparison'
+                    }
+                ]
+            },
+            
+            # Class 8 Questions
+            8: {
+                'Math': [
+                    {
+                        'question': 'What is x² - 4x + 4 when factored?',
+                        'options': ['(x-2)²', '(x+2)²', '(x-4)²', '(x+4)²'],
+                        'correct_answer': '(x-2)²'
+                    }
+                ],
+                'Physics': [
+                    {
+                        'question': 'The unit of pressure is:',
+                        'options': ['Newton', 'Pascal', 'Joule', 'Watt'],
+                        'correct_answer': 'Pascal'
+                    }
+                ],
+                'Chemistry': [
+                    {
+                        'question': 'What is the pH of pure water?',
+                        'options': ['5', '6', '7', '8'],
+                        'correct_answer': '7'
+                    }
+                ]
+            },
+            
+            # Class 10 Questions
+            10: {
+                'Math': [
+                    {
+                        'question': 'The quadratic formula is used to find:',
+                        'options': ['Roots of linear equations', 'Roots of quadratic equations', 'Area of circle', 'Volume of sphere'],
+                        'correct_answer': 'Roots of quadratic equations'
+                    }
+                ],
+                'Physics': [
+                    {
+                        'question': 'The resistance of a conductor depends on:',
+                        'options': ['Length only', 'Area only', 'Material only', 'All of these'],
+                        'correct_answer': 'All of these'
+                    }
+                ]
+            },
+            
+            # Class 12 Questions (Advanced Competitive Level)
+            12: {
+                'Physics': [
+                    {
+                        'question': 'The de Broglie wavelength is given by:',
+                        'options': ['λ = h/p', 'λ = h/mv', 'λ = hf', 'λ = c/f'],
+                        'correct_answer': 'λ = h/p'
+                    },
+                    {
+                        'question': 'In photoelectric effect, the stopping potential depends on:',
+                        'options': ['Intensity only', 'Frequency only', 'Both intensity and frequency', 'Neither'],
+                        'correct_answer': 'Frequency only'
+                    }
+                ],
+                'Chemistry': [
+                    {
+                        'question': 'The rate constant of a zero order reaction has units:',
+                        'options': ['mol L⁻¹ s⁻¹', 's⁻¹', 'mol⁻¹ L s⁻¹', 'mol² L⁻² s⁻¹'],
+                        'correct_answer': 'mol L⁻¹ s⁻¹'
+                    }
+                ],
+                'Math': [
+                    {
+                        'question': 'The range of function f(x) = sin⁻¹(x) is:',
+                        'options': ['[-π/2, π/2]', '[0, π]', '[-π, π]', '[-1, 1]'],
+                        'correct_answer': '[-π/2, π/2]'
+                    }
+                ]
             }
         }
     
@@ -296,14 +601,21 @@ class QuizModule:
     def generate_quiz(self, class_num, subject, num_questions, language):
         """Generate quiz questions for given parameters"""
         try:
-            # Get questions for the class
+            # Get questions for the class, with fallback logic
             class_questions = self.questions_data.get(class_num, {})
             
             # If exact class not found, find nearest available class
             if not class_questions:
                 available_classes = sorted(self.questions_data.keys())
-                nearest_class = min(available_classes, key=lambda x: abs(x - class_num))
-                class_questions = self.questions_data[nearest_class]
+                if class_num <= 5:
+                    nearest_class = 3
+                elif class_num <= 8:
+                    nearest_class = 6
+                elif class_num <= 10:
+                    nearest_class = 9
+                else:
+                    nearest_class = 11
+                class_questions = self.questions_data.get(nearest_class, {})
             
             # Get subject questions
             subject_questions = class_questions.get(subject, [])
