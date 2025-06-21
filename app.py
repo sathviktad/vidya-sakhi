@@ -33,6 +33,12 @@ if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 if 'user_role' not in st.session_state:
     st.session_state.user_role = None
+if 'active_tab' not in st.session_state:
+    st.session_state.active_tab = "chat"
+if 'quiz_history' not in st.session_state:
+    st.session_state.quiz_history = []
+if 'student_progress' not in st.session_state:
+    st.session_state.student_progress = {}
 
 # Initialize modules
 chatbot = ChatBot()
@@ -127,6 +133,17 @@ def show_student_interface():
             st.session_state.quiz_score = 0
             st.session_state.quiz_current = 0
             st.session_state.quiz_answers = []
+            st.session_state.active_tab = "quiz"
+        if st.button("💬 Chat with Sakhi", use_container_width=True):
+            st.session_state.active_tab = "chat"
+        if st.button("📖 Study Materials", use_container_width=True):
+            st.session_state.active_tab = "study"
+        if st.button("📊 Analytics", use_container_width=True):
+            st.session_state.active_tab = "analytics"
+        if st.button("ℹ️ About Us", use_container_width=True):
+            st.session_state.active_tab = "about"
+        if st.button("📞 Contact", use_container_width=True):
+            st.session_state.active_tab = "contact"
     
     # Header
     st.markdown("""
@@ -150,7 +167,7 @@ def show_student_interface():
             st.markdown(get_avatar_svg(), unsafe_allow_html=True)
     
     # Main content tabs
-    tab1, tab2, tab3 = st.tabs(["💬 Chat with Sakhi", "🧠 Quiz Time", "📖 Study Materials"])
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["💬 Chat with Sakhi", "🧠 Quiz Time", "📖 Study Materials", "📊 Analytics", "ℹ️ About Us", "📞 Contact"])
     
     with tab1:
         chat_interface()
@@ -160,6 +177,15 @@ def show_student_interface():
     
     with tab3:
         study_materials_interface()
+    
+    with tab4:
+        analytics_interface()
+    
+    with tab5:
+        about_us_interface()
+    
+    with tab6:
+        contact_interface()
 
 def show_teacher_interface():
     """Teacher interface with additional functionality"""
@@ -221,6 +247,8 @@ def show_teacher_interface():
     
     with tab1:
         teacher_study_materials()
+        st.markdown("---")
+        teacher_quiz_management()
     
     with tab2:
         chat_interface()
@@ -229,8 +257,7 @@ def show_teacher_interface():
         quiz_interface()
     
     with tab4:
-        st.markdown("### 📊 Student Progress Dashboard")
-        st.info("Student progress tracking will be implemented here")
+        teacher_analytics_dashboard()
 
 def show_admin_interface():
     """Admin interface"""
@@ -301,6 +328,235 @@ def teacher_study_materials():
         st.info(f"No materials found for {selected_subject} - Class {selected_class}")
         st.write("Upload new material above to add content for this subject.")
 
+def teacher_quiz_management():
+    """Teacher interface for adding quiz questions"""
+    st.markdown("### ➕ Add Quiz Questions")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        add_class = st.selectbox("Select Class for Question", list(range(3, 13)), key="add_q_class")
+    with col2:
+        subjects = quiz_module.get_subjects_for_class(add_class)
+        add_subject = st.selectbox("Select Subject for Question", subjects, key="add_q_subject")
+    
+    with st.form("add_question_form"):
+        question_text = st.text_area("Question", placeholder="Enter your question here...")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            option1 = st.text_input("Option A")
+            option2 = st.text_input("Option B")
+        with col2:
+            option3 = st.text_input("Option C")
+            option4 = st.text_input("Option D")
+        
+        correct_answer = st.selectbox("Correct Answer", ["Option A", "Option B", "Option C", "Option D"])
+        
+        if st.form_submit_button("Add Question"):
+            if question_text and option1 and option2 and option3 and option4:
+                options = [option1, option2, option3, option4]
+                correct_idx = ["Option A", "Option B", "Option C", "Option D"].index(correct_answer)
+                
+                question_data = {
+                    'question': question_text,
+                    'options': options,
+                    'correct_answer': options[correct_idx]
+                }
+                
+                if quiz_module.add_question(add_class, add_subject, question_data):
+                    st.success(f"Question added successfully to {add_subject} - Class {add_class}!")
+                else:
+                    st.error("Failed to add question")
+            else:
+                st.error("Please fill all fields")
+
+def analytics_interface():
+    """Student analytics and progress dashboard"""
+    st.markdown("### 📊 Your Learning Analytics")
+    
+    if not st.session_state.quiz_history:
+        st.info("No quiz history available. Take some quizzes to see your progress!")
+        return
+    
+    # Overall statistics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    total_quizzes = len(st.session_state.quiz_history)
+    completed_quizzes = len([q for q in st.session_state.quiz_history if q['status'] == 'Completed'])
+    avg_score = sum(q['score'] for q in st.session_state.quiz_history) / total_quizzes if total_quizzes > 0 else 0
+    
+    with col1:
+        st.metric("Total Quizzes", total_quizzes)
+    with col2:
+        st.metric("Completed", completed_quizzes)
+    with col3:
+        st.metric("Average Score", f"{avg_score:.1f}%")
+    with col4:
+        highest_score = max((q['score'] for q in st.session_state.quiz_history), default=0)
+        st.metric("Best Score", f"{highest_score:.1f}%")
+    
+    st.markdown("---")
+    
+    # Recent quiz history
+    st.markdown("### 📈 Recent Quiz History")
+    if st.session_state.quiz_history:
+        import pandas as pd
+        df = pd.DataFrame(st.session_state.quiz_history)
+        st.dataframe(df, use_container_width=True)
+    
+    # Subject-wise performance
+    st.markdown("### 📚 Subject Performance")
+    subject_scores = {}
+    for quiz in st.session_state.quiz_history:
+        subject = quiz['subject']
+        if subject not in subject_scores:
+            subject_scores[subject] = []
+        subject_scores[subject].append(quiz['score'])
+    
+    if subject_scores:
+        for subject, scores in subject_scores.items():
+            avg_score = sum(scores) / len(scores)
+            st.write(f"**{subject}:** {avg_score:.1f}% average ({len(scores)} quizzes)")
+            st.progress(avg_score / 100)
+
+def teacher_analytics_dashboard():
+    """Teacher analytics dashboard"""
+    st.markdown("### 📊 Student Progress Dashboard")
+    
+    # This would typically connect to a database to show all students' progress
+    st.info("""
+    **Teacher Analytics Dashboard**
+    
+    This section will show:
+    - Overall class performance
+    - Individual student progress
+    - Subject-wise statistics
+    - Quiz completion rates
+    - Performance trends
+    
+    Currently showing demo data. In a full implementation, this would connect to a student database.
+    """)
+    
+    # Demo metrics
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("Total Students", "45")
+    with col2:
+        st.metric("Active This Week", "38")
+    with col3:
+        st.metric("Average Score", "78.5%")
+    with col4:
+        st.metric("Quizzes Completed", "156")
+
+def about_us_interface():
+    """About Us section"""
+    st.markdown("### ℹ️ About Vidya Sakhi")
+    
+    st.markdown("""
+    ## 🌟 Your AI Learning Companion
+    
+    **Vidya Sakhi** is an innovative educational platform designed specifically for Indian school students from Classes 3-12. Our mission is to make learning engaging, accessible, and fun for every student.
+    
+    ### 🎯 What We Offer
+    
+    **For Students:**
+    - 🤖 AI-powered chat assistance for all subjects
+    - 🧠 Interactive quizzes with instant feedback
+    - 📚 Comprehensive study materials
+    - 🗣️ Multi-language support including Hindi, Telugu, and regional languages
+    - 🔊 Voice assistance for better learning
+    - 📊 Personal progress tracking and analytics
+    
+    **For Teachers:**
+    - 📝 Easy quiz question management
+    - 📋 Student progress monitoring
+    - 📁 Study material upload and organization
+    - 📊 Class performance analytics
+    
+    **For Administrators:**
+    - 👥 User management system
+    - 📈 System-wide analytics
+    - 🔧 Platform administration tools
+    
+    ### 🌍 Our Vision
+    
+    To democratize quality education by providing every Indian student with a personalized AI tutor that understands their language, culture, and learning needs.
+    
+    ### 🏆 Key Features
+    
+    - **Multi-lingual Support:** Learn in your preferred language
+    - **AI-Powered:** Intelligent responses powered by advanced AI
+    - **Comprehensive Content:** Covers all major subjects and classes
+    - **Voice Enabled:** Audio support for better accessibility
+    - **Progress Tracking:** Monitor your learning journey
+    - **Secure & Safe:** Protected user data and safe learning environment
+    
+    ### 🙏 Acknowledgments
+    
+    Vidya Sakhi is built with love for Indian students, incorporating the best of modern technology with traditional educational values.
+    """)
+
+def contact_interface():
+    """Contact section"""
+    st.markdown("### 📞 Contact Us")
+    
+    st.markdown("""
+    ## Get in Touch
+    
+    We'd love to hear from you! Whether you have questions, suggestions, or need support, our team is here to help.
+    
+    ### 📧 Contact Information
+    
+    **Email:** [Contact email to be added]
+    **Phone:** [Contact phone to be added]
+    **Address:** [Office address to be added]
+    
+    ### 🕒 Support Hours
+    
+    - **Monday - Friday:** 9:00 AM - 6:00 PM
+    - **Saturday:** 10:00 AM - 4:00 PM
+    - **Sunday:** Closed
+    
+    ### 💬 Quick Contact Form
+    """)
+    
+    with st.form("contact_form"):
+        col1, col2 = st.columns(2)
+        with col1:
+            name = st.text_input("Your Name*")
+            email = st.text_input("Email Address*")
+        with col2:
+            phone = st.text_input("Phone Number")
+            subject = st.selectbox("Subject", ["General Inquiry", "Technical Support", "Feature Request", "Bug Report", "Other"])
+        
+        message = st.text_area("Message*", placeholder="Please describe your query or feedback...")
+        
+        if st.form_submit_button("Send Message"):
+            if name and email and message:
+                st.success("Thank you for your message! We'll get back to you soon.")
+                st.info("Note: This is a demo form. In production, this would send an actual email.")
+            else:
+                st.error("Please fill in all required fields marked with *")
+    
+    st.markdown("""
+    ### 🤝 Connect With Us
+    
+    - **GitHub:** [Repository link to be added]
+    - **LinkedIn:** [LinkedIn profile to be added]
+    - **Twitter:** [Twitter handle to be added]
+    
+    ### 📚 Resources
+    
+    - **User Guide:** [Link to user documentation]
+    - **FAQs:** [Link to frequently asked questions]
+    - **Video Tutorials:** [Link to tutorial videos]
+    
+    ### 🆘 Emergency Support
+    
+    For urgent technical issues during school hours, please contact our emergency support line:
+    **Emergency Phone:** [Emergency contact to be added]
+    """)
+
 def chat_interface():
     st.markdown("### 💬 Chat with Your AI Companion")
     
@@ -366,6 +622,7 @@ def show_quiz_menu():
         st.markdown("#### Select Subject")
         subjects = quiz_module.get_subjects_for_class(st.session_state.selected_class)
         selected_subject = st.selectbox("Choose a subject:", subjects)
+        st.session_state.quiz_subject = selected_subject  # Store for analytics
     
     with col2:
         st.markdown("#### Quiz Settings")
@@ -421,9 +678,9 @@ def show_quiz_questions():
         key=f"q_{current_idx}"
     )
     
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2 = st.columns(2)
     
-    with col2:
+    with col1:
         if st.button("Submit Answer", type="primary", use_container_width=True):
             # Check answer
             is_correct = selected_option == question['correct_answer']
@@ -457,13 +714,62 @@ def show_quiz_questions():
                     st.rerun()
             else:
                 st.rerun()
+    
+    with col2:
+        if st.button("🚪 Exit Quiz", type="secondary", use_container_width=True):
+            from datetime import datetime
+            # Calculate current score
+            correct_answers = sum(1 for ans in st.session_state.quiz_answers if ans['is_correct'])
+            current_score = correct_answers / len(st.session_state.quiz_answers) * 100 if st.session_state.quiz_answers else 0
+            
+            # Save to quiz history
+            quiz_record = {
+                'date': str(datetime.now().date()),
+                'subject': st.session_state.get('quiz_subject', 'Unknown'),
+                'class': st.session_state.selected_class,
+                'questions_attempted': len(st.session_state.quiz_answers),
+                'score': current_score,
+                'status': 'Incomplete'
+            }
+            st.session_state.quiz_history.append(quiz_record)
+            
+            # Reset quiz state
+            st.session_state.quiz_started = False
+            st.session_state.quiz_score = 0
+            st.session_state.quiz_current = 0
+            st.session_state.quiz_answers = []
+            
+            st.warning(f"Quiz exited! Your score: {current_score:.1f}% ({correct_answers}/{len(st.session_state.quiz_answers)} questions)")
+            st.rerun()
 
 def show_quiz_results():
     st.markdown("### 🎉 Quiz Completed!")
     
+    from datetime import datetime
     score = st.session_state.quiz_score
     total = len(st.session_state.quiz_questions)
     percentage = (score / total) * 100
+    
+    # Save to quiz history
+    quiz_record = {
+        'date': str(datetime.now().date()),
+        'subject': st.session_state.get('quiz_subject', 'Unknown'),
+        'class': st.session_state.selected_class,
+        'questions_attempted': total,
+        'score': percentage,
+        'status': 'Completed'
+    }
+    st.session_state.quiz_history.append(quiz_record)
+    
+    # Update student progress
+    subject = st.session_state.get('quiz_subject', 'Unknown')
+    if subject not in st.session_state.student_progress:
+        st.session_state.student_progress[subject] = []
+    st.session_state.student_progress[subject].append({
+        'date': str(datetime.now().date()),
+        'score': percentage,
+        'questions': total
+    })
     
     # Score display
     col1, col2, col3 = st.columns(3)

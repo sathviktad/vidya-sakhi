@@ -723,6 +723,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "bcrypt" },
     { name = "gtts" },
+    { name = "pandas" },
     { name = "pygame" },
     { name = "reportlab" },
     { name = "requests" },
@@ -735,6 +736,7 @@ dependencies = [
 requires-dist = [
     { name = "bcrypt", specifier = ">=4.3.0" },
     { name = "gtts", specifier = ">=2.5.4" },
+    { name = "pandas", specifier = ">=2.3.0" },
     { name = "pygame", specifier = ">=2.6.1" },
     { name = "reportlab", specifier = ">=4.4.2" },
     { name = "requests", specifier = ">=2.32.4" },

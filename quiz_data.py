@@ -4,6 +4,37 @@ from utils import get_language_code
 
 class QuizModule:
     def __init__(self):
+        self.load_questions_from_file()
+    
+    def load_questions_from_file(self):
+        """Load questions from JSON file, create default if doesn't exist"""
+        try:
+            import json
+            with open('quiz_questions.json', 'r', encoding='utf-8') as f:
+                self.questions_db = json.load(f)
+        except FileNotFoundError:
+            self.create_default_questions()
+            self.save_questions_to_file()
+    
+    def save_questions_to_file(self):
+        """Save questions to JSON file"""
+        import json
+        with open('quiz_questions.json', 'w', encoding='utf-8') as f:
+            json.dump(self.questions_db, f, ensure_ascii=False, indent=2)
+    
+    def add_question(self, class_num, subject, question_data):
+        """Add a new question to the database"""
+        class_key = f"class_{class_num}"
+        if class_key not in self.questions_db:
+            self.questions_db[class_key] = {}
+        if subject not in self.questions_db[class_key]:
+            self.questions_db[class_key][subject] = []
+        
+        self.questions_db[class_key][subject].append(question_data)
+        self.save_questions_to_file()
+        return True
+    
+    def create_default_questions(self):
         self.translator = Translate()
         self.questions_data = {
             # Copy data for classes 4 and 5 (same as class 3 with slight variations)
