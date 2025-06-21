@@ -1,0 +1,57 @@
+Build a complete Python-based Streamlit educational app called *Vidya Sakhi – Student AI Companion* designed for Indian school students (Classes 3 to 12). The app must run entirely within *Streamlit, be visually neat and responsive, and must use only **free libraries* (no paid APIs or paymets required). Include the following fully working features: 
+
+MULTILINGUAL CHATBOT: 
+- Use a free local chatbot logic or placeholder (no paid OpenAI or any paid API). 
+- Let the user select a language (from Hindi, Telugu, Tamil, Malayalam, Kannada, Bengali, Marathi, Gujarati, Punjabi, Urdu).
+- Use translatepy to translate user input from the selected language into English.
+- Use a placeholder chatbot logic (like a basic AI or rule-based reply system).
+- Translate the reply back into the selected language using translatepy.
+- Display both the original and translated chat.
+- Allow continuous conversation with *Enter key* and *Ask Sakhi button*.
+- Provide *voice output* for each reply using **Google Text-to-Speech (gTTS).
+
+STUDY MATERIALS SECTION: 
+- Add a section with subject-wise study notes and PDFs (can use dummy files to dmonstrate). 
+- Subjects: Math, Science, Social, English, Hindi, GK, Value Education, Computers. 
+- Use collapsible sections per subject.
+- Make the PDFs downloadable (sample dummy files allowed).
+
+QUIZ MODULE: 
+- Support classes 3 to 12.
+- Subjects classes 3-5: Math, Science, Social, English, GK, Computers, Sports, Value Education, Regional Language. 
+- Split Science into Physics/Chemistry/Bio from class 8 and Social into History/Geography/Civics from class 6 onward. 
+- 11th and 12th should be stream based. i.e; MPC, BiPC, etc
+- Quiz must work without downloading or paid APIs.
+- Show MCQ (A, B, C, D) one by one with answer check.
+- Display correct/incorrect feedback and final score with a result screen. 
+- Keep increasing the difficulty level as the class increases, 11th and 12th are expected competative exams level, 9th and 10th are expected board level difficulty and so onn.
+
+- Questions must be generated in the selected regional language using translatepy (from base English).
+
+VOICE FEATURES: 
+- Use gTTS to read:
+  - Chatbot replies
+  - Quiz questions (optional)
+- Add a mute/unmute voice toggle in the sidebar.
+
+UI AND LAYOUT: 
+- Use Streamlit layout with unsafe_allow_html=True for enhanced design.
+- Stunning, professional student-friendly layout. 
+- Add dark/light theme toggle.
+- Sidebar:
+  - Class selection
+  - Language selection
+  - Theme toggle
+- Display a cute assistant image or avatar as it is for the students. 
+- All features must be displayed on a beautiful layout as you prefer (chat and quiz side by side if possible). 
+- Include a friendly header like: "Vidya Sakhi – Your Learning Bestie" or a good one. 
+
+NOTE: 
+- No paid services (no OpenAI, no DeepSeek, no Firebase, no external hosting).
+- Everything should run locally or on free Streamlit hosting.
+- Use placeholder logic where necessary but make sure UI and flow are ready.
+- Only use free Python libraries mostly reinstalled or are already satisfied. 
+
+Now generate the full working Streamlit app code accordingly, split into clean files if needed (or one long file). Include fallback messages if a translation fails. Everything should run for free, be child-safe, and multilingual.
+Remember free, as I am making it on eductaional purposes!!
+Ask me for the footer section when ready and is fully working, so that i will provide the necessary details accordingly.
