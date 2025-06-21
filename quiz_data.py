@@ -6,7 +6,7 @@ class QuizModule:
     def __init__(self):
         self.translator = Translate()
         self.questions_data = {
-            # Class 3-5 Questions
+            # Class 3-5 Questions (Basic Level)
             3: {
                 'Math': [
                     {
@@ -33,6 +33,21 @@ class QuizModule:
                         'question': 'What is 2 × 4?',
                         'options': ['6', '7', '8', '9'],
                         'correct_answer': '8'
+                    },
+                    {
+                        'question': 'Which is the smallest number?',
+                        'options': ['5', '2', '8', '6'],
+                        'correct_answer': '2'
+                    },
+                    {
+                        'question': 'How many days are there in a week?',
+                        'options': ['5', '6', '7', '8'],
+                        'correct_answer': '7'
+                    },
+                    {
+                        'question': 'What is 15 - 10?',
+                        'options': ['3', '4', '5', '6'],
+                        'correct_answer': '5'
                     }
                 ],
                 'Science': [
@@ -167,6 +182,36 @@ class QuizModule:
                         'question': 'In Young\'s double slit experiment, the fringe width is:',
                         'options': ['λD/d', 'λd/D', 'D/λd', 'λ/Dd'],
                         'correct_answer': 'λD/d'
+                    },
+                    {
+                        'question': 'A particle undergoes SHM with amplitude A. At what displacement is the kinetic energy equal to potential energy?',
+                        'options': ['A/2', 'A/√2', 'A/√3', 'A/4'],
+                        'correct_answer': 'A/√2'
+                    },
+                    {
+                        'question': 'The work function of a metal is 2.5 eV. What is the threshold frequency?',
+                        'options': ['6.0 × 10¹⁴ Hz', '4.8 × 10¹⁴ Hz', '3.6 × 10¹⁴ Hz', '7.2 × 10¹⁴ Hz'],
+                        'correct_answer': '6.0 × 10¹⁴ Hz'
+                    },
+                    {
+                        'question': 'For a conducting sphere of radius R carrying charge Q, the electric field inside is:',
+                        'options': ['kQ/R²', 'kQ/r²', '0', 'kQ/(4πR²)'],
+                        'correct_answer': '0'
+                    },
+                    {
+                        'question': 'The coefficient of restitution for a perfectly elastic collision is:',
+                        'options': ['0', '1', '-1', '∞'],
+                        'correct_answer': '1'
+                    },
+                    {
+                        'question': 'In a uniform magnetic field, a charged particle moves in a circular path. The radius depends on:',
+                        'options': ['velocity only', 'mass only', 'charge only', 'momentum'],
+                        'correct_answer': 'momentum'
+                    },
+                    {
+                        'question': 'The ratio of speeds of sound in hydrogen and oxygen at same temperature is:',
+                        'options': ['4:1', '1:4', '2:1', '1:2'],
+                        'correct_answer': '4:1'
                     }
                 ],
                 'Chemistry': [
@@ -179,6 +224,36 @@ class QuizModule:
                         'question': 'The hybridization of carbon in diamond is:',
                         'options': ['sp', 'sp²', 'sp³', 'sp³d'],
                         'correct_answer': 'sp³'
+                    },
+                    {
+                        'question': 'For the reaction A + B → C, if concentration of A is doubled and B is tripled, the rate increases 12 times. The order with respect to A is:',
+                        'options': ['1', '2', '3', '0'],
+                        'correct_answer': '2'
+                    },
+                    {
+                        'question': 'The entropy change for an adiabatic reversible process is:',
+                        'options': ['Positive', 'Negative', 'Zero', 'Infinite'],
+                        'correct_answer': 'Zero'
+                    },
+                    {
+                        'question': 'In SN2 mechanism, the stereochemistry is:',
+                        'options': ['Retention', 'Inversion', 'Racemization', 'No change'],
+                        'correct_answer': 'Inversion'
+                    },
+                    {
+                        'question': 'The number of unpaired electrons in Fe³⁺ (Z=26) is:',
+                        'options': ['3', '4', '5', '6'],
+                        'correct_answer': '5'
+                    },
+                    {
+                        'question': 'Which quantum number determines the shape of orbital?',
+                        'options': ['n', 'l', 'm', 's'],
+                        'correct_answer': 'l'
+                    },
+                    {
+                        'question': 'The pH of 0.1 M CH₃COOH (Ka = 1.8 × 10⁻⁵) is approximately:',
+                        'options': ['1', '2.9', '4.8', '7'],
+                        'correct_answer': '2.9'
                     }
                 ],
                 'Math': [

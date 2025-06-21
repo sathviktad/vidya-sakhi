@@ -11,37 +11,76 @@ from utils import get_language_code
 class ChatBot:
     def __init__(self):
         self.translator = Translate()
+        self.knowledge_base = {
+            'math': {
+                'basic': {
+                    'addition': "Addition means putting numbers together. For example, 2 + 3 = 5. Start with smaller numbers and practice daily!",
+                    'subtraction': "Subtraction means taking away. Like 5 - 2 = 3. Think of it as counting backwards!",
+                    'multiplication': "Multiplication is repeated addition. 3 × 4 means adding 3 four times: 3+3+3+3 = 12",
+                    'division': "Division is sharing equally. 12 ÷ 3 = 4 means sharing 12 things among 3 groups equally."
+                },
+                'intermediate': {
+                    'fractions': "Fractions show parts of a whole. 1/2 means one part out of two equal parts. To add fractions, make denominators same first.",
+                    'decimals': "Decimals are another way to write fractions. 0.5 = 1/2. The digits after decimal point show parts smaller than 1.",
+                    'algebra': "Algebra uses letters like x and y to represent unknown numbers. If x + 5 = 8, then x = 3.",
+                    'geometry': "Geometry deals with shapes. A triangle has 3 sides, square has 4 equal sides, circle is perfectly round."
+                },
+                'advanced': {
+                    'quadratic': "Quadratic equations have x². The formula is x = [-b ± √(b²-4ac)]/2a. Practice with simple examples first.",
+                    'trigonometry': "Trigonometry studies triangles. sin, cos, tan are ratios. Remember: sin²θ + cos²θ = 1 always.",
+                    'calculus': "Calculus studies change. Derivative shows rate of change, integral finds total change."
+                }
+            },
+            'science': {
+                'basic': {
+                    'plants': "Plants need sunlight, water, and air to grow. They make their own food through photosynthesis using green leaves.",
+                    'animals': "Animals are living beings that move, eat, breathe, and grow. They need food, water, and shelter to survive.",
+                    'weather': "Weather changes daily. Sun makes it warm, clouds bring rain, wind moves air around us."
+                },
+                'physics': {
+                    'motion': "Motion means changing position. Speed = distance/time. Acceleration means speeding up or slowing down.",
+                    'force': "Force can push or pull objects. Newton's laws: 1) Objects at rest stay at rest 2) F=ma 3) Every action has equal opposite reaction.",
+                    'energy': "Energy makes things happen. Kinetic energy is energy of motion, potential energy is stored energy."
+                },
+                'chemistry': {
+                    'atoms': "Atoms are tiny building blocks of everything. They have protons (+), neutrons (0), and electrons (-).",
+                    'elements': "Elements are pure substances made of one type of atom. Hydrogen is lightest, carbon forms many compounds.",
+                    'reactions': "Chemical reactions change substances. Like burning, rusting, cooking. Atoms rearrange to form new compounds."
+                },
+                'biology': {
+                    'cells': "Cells are basic units of life. Plant cells have cell wall, animal cells don't. Nucleus controls the cell.",
+                    'genetics': "Genetics explains how traits pass from parents to children through DNA. DNA is like a instruction manual.",
+                    'evolution': "Evolution explains how species change over time. Natural selection helps organisms adapt to environment."
+                }
+            },
+            'english': {
+                'grammar': "Grammar rules help us speak and write correctly. Subject does action, verb shows action, object receives action.",
+                'vocabulary': "Building vocabulary means learning new words daily. Read books, use dictionary, practice using new words in sentences.",
+                'writing': "Good writing needs clear ideas, proper grammar, and logical flow. Start with simple sentences, then combine them.",
+                'literature': "Literature includes stories, poems, plays. They teach us about life, emotions, and different cultures."
+            },
+            'history': {
+                'ancient': "Ancient India had great civilizations like Indus Valley, Mauryan Empire. They made advances in science, art, and trade.",
+                'medieval': "Medieval period saw rise of Delhi Sultanate, Mughal Empire. Great architecture like Taj Mahal was built.",
+                'modern': "Modern India includes freedom struggle, independence in 1947, and development as democratic nation."
+            },
+            'geography': {
+                'earth': "Earth has land, water, and air. 71% is water (oceans), 29% is land (continents). Atmosphere protects us.",
+                'climate': "Climate is long-term weather pattern. Tropical regions are hot, polar regions are cold, temperate regions are moderate.",
+                'resources': "Natural resources like water, minerals, forests are gifts of nature. We must use them wisely and conserve them."
+            }
+        }
+        
         self.responses = {
             'greeting': [
                 "Hello! I'm Vidya Sakhi, your learning companion. How can I help you today?",
                 "Hi there! Ready to learn something new today?",
                 "Namaste! I'm here to help you with your studies. What would you like to know?"
             ],
-            'math': [
-                "Math is like a puzzle - once you understand the pattern, it becomes fun! What specific topic do you need help with?",
-                "Mathematics is the language of the universe. Let's solve some problems together!",
-                "Don't worry about math - practice makes perfect! Which concept would you like me to explain?"
-            ],
-            'science': [
-                "Science is all around us! From the air we breathe to the stars we see. What scientific concept interests you?",
-                "Every great scientist started with curiosity. What would you like to explore today?",
-                "Science helps us understand our amazing world. Which subject - Physics, Chemistry, or Biology?"
-            ],
-            'english': [
-                "English opens doors to the world! Whether it's grammar, literature, or writing, I'm here to help.",
-                "Reading and writing are superpowers! What aspect of English would you like to improve?",
-                "English is a beautiful language. Let's work on your vocabulary, grammar, or comprehension!"
-            ],
-            'social': [
-                "History and geography tell the story of our world. What period or place interests you?",
-                "Understanding our society and culture makes us better citizens. What topic shall we explore?",
-                "From ancient civilizations to modern times, there's so much to learn! What's your question?"
-            ],
             'motivation': [
                 "You're doing great! Every small step in learning is a big achievement.",
                 "Remember, even the greatest scholars started as beginners. Keep going!",
-                "Learning is a journey, not a destination. I'm proud of your curiosity!",
-                "Mistakes are proof that you're trying. Every error is a step closer to success!"
+                "Learning is a journey, not a destination. I'm proud of your curiosity!"
             ],
             'study_tips': [
                 "Here are some study tips: 1) Take regular breaks 2) Make notes 3) Practice daily 4) Ask questions!",
@@ -50,14 +89,7 @@ class ChatBot:
             ],
             'exam_prep': [
                 "Exam preparation tips: Review regularly, solve previous papers, get enough sleep, and stay positive!",
-                "For exams: Make a timetable, focus on weak areas, take mock tests, and believe in yourself!",
-                "Don't stress about exams. Prepare well, eat healthy, and remember - you've got this!"
-            ],
-            'default': [
-                "That's an interesting question! While I may not have all the answers, I encourage you to explore and learn more.",
-                "Great question! This is exactly the kind of curiosity that leads to great discoveries.",
-                "I love your enthusiasm for learning! Let's think about this together.",
-                "That's a thoughtful question. What do you think might be the answer?"
+                "For exams: Make a timetable, focus on weak areas, take mock tests, and believe in yourself!"
             ]
         }
         
@@ -122,9 +154,8 @@ class ChatBot:
             else:
                 english_input = user_input
             
-            # Categorize and get response
-            category = self.categorize_input(english_input)
-            response = random.choice(self.responses[category])
+            # Get intelligent response based on content
+            response = self.get_intelligent_response(english_input)
             
             # Translate response back to selected language
             if language != 'English':
@@ -132,7 +163,6 @@ class ChatBot:
                     translated_response = self.translator.translate(response, get_language_code(language)).result
                     return translated_response, response
                 except Exception as e:
-                    # Fallback: return English response with error note
                     return f"{response} (Translation temporarily unavailable)", response
             else:
                 return response, None
@@ -140,6 +170,116 @@ class ChatBot:
         except Exception as e:
             error_msg = "I'm sorry, I'm having trouble understanding right now. Please try again!"
             return error_msg, None
+    
+    def get_intelligent_response(self, user_input):
+        """Generate intelligent responses based on user input content"""
+        text_lower = user_input.lower()
+        
+        # Greeting responses
+        greeting_words = ['hello', 'hi', 'hey', 'namaste', 'good morning', 'good afternoon']
+        if any(word in text_lower for word in greeting_words):
+            return random.choice(self.responses['greeting'])
+        
+        # Check for specific knowledge queries
+        # Math topics
+        if any(word in text_lower for word in ['addition', 'add', 'plus', 'sum']):
+            return self.knowledge_base['math']['basic']['addition']
+        elif any(word in text_lower for word in ['subtraction', 'subtract', 'minus', 'difference']):
+            return self.knowledge_base['math']['basic']['subtraction']
+        elif any(word in text_lower for word in ['multiplication', 'multiply', 'times', 'product']):
+            return self.knowledge_base['math']['basic']['multiplication']
+        elif any(word in text_lower for word in ['division', 'divide', 'quotient']):
+            return self.knowledge_base['math']['basic']['division']
+        elif any(word in text_lower for word in ['fraction', 'fractions']):
+            return self.knowledge_base['math']['intermediate']['fractions']
+        elif any(word in text_lower for word in ['decimal', 'decimals']):
+            return self.knowledge_base['math']['intermediate']['decimals']
+        elif any(word in text_lower for word in ['algebra', 'equation', 'variable']):
+            return self.knowledge_base['math']['intermediate']['algebra']
+        elif any(word in text_lower for word in ['geometry', 'shape', 'triangle', 'circle']):
+            return self.knowledge_base['math']['intermediate']['geometry']
+        elif any(word in text_lower for word in ['quadratic', 'x²', 'x square']):
+            return self.knowledge_base['math']['advanced']['quadratic']
+        elif any(word in text_lower for word in ['trigonometry', 'sin', 'cos', 'tan']):
+            return self.knowledge_base['math']['advanced']['trigonometry']
+        elif any(word in text_lower for word in ['calculus', 'derivative', 'integral']):
+            return self.knowledge_base['math']['advanced']['calculus']
+        
+        # Science topics
+        elif any(word in text_lower for word in ['plant', 'plants', 'photosynthesis']):
+            return self.knowledge_base['science']['basic']['plants']
+        elif any(word in text_lower for word in ['animal', 'animals']):
+            return self.knowledge_base['science']['basic']['animals']
+        elif any(word in text_lower for word in ['weather', 'rain', 'sun', 'wind']):
+            return self.knowledge_base['science']['basic']['weather']
+        elif any(word in text_lower for word in ['motion', 'speed', 'velocity']):
+            return self.knowledge_base['science']['physics']['motion']
+        elif any(word in text_lower for word in ['force', 'newton', 'push', 'pull']):
+            return self.knowledge_base['science']['physics']['force']
+        elif any(word in text_lower for word in ['energy', 'kinetic', 'potential']):
+            return self.knowledge_base['science']['physics']['energy']
+        elif any(word in text_lower for word in ['atom', 'atoms', 'proton', 'electron']):
+            return self.knowledge_base['science']['chemistry']['atoms']
+        elif any(word in text_lower for word in ['element', 'elements', 'periodic table']):
+            return self.knowledge_base['science']['chemistry']['elements']
+        elif any(word in text_lower for word in ['reaction', 'chemical reaction']):
+            return self.knowledge_base['science']['chemistry']['reactions']
+        elif any(word in text_lower for word in ['cell', 'cells', 'nucleus']):
+            return self.knowledge_base['science']['biology']['cells']
+        elif any(word in text_lower for word in ['dna', 'genetics', 'genes']):
+            return self.knowledge_base['science']['biology']['genetics']
+        elif any(word in text_lower for word in ['evolution', 'natural selection']):
+            return self.knowledge_base['science']['biology']['evolution']
+        
+        # English topics
+        elif any(word in text_lower for word in ['grammar', 'sentence', 'verb', 'noun']):
+            return self.knowledge_base['english']['grammar']
+        elif any(word in text_lower for word in ['vocabulary', 'words', 'meaning']):
+            return self.knowledge_base['english']['vocabulary']
+        elif any(word in text_lower for word in ['writing', 'essay', 'paragraph']):
+            return self.knowledge_base['english']['writing']
+        elif any(word in text_lower for word in ['literature', 'story', 'poem', 'novel']):
+            return self.knowledge_base['english']['literature']
+        
+        # History topics
+        elif any(word in text_lower for word in ['ancient', 'indus valley', 'mauryan']):
+            return self.knowledge_base['history']['ancient']
+        elif any(word in text_lower for word in ['medieval', 'mughal', 'sultanate']):
+            return self.knowledge_base['history']['medieval']
+        elif any(word in text_lower for word in ['modern', 'independence', 'freedom']):
+            return self.knowledge_base['history']['modern']
+        
+        # Geography topics
+        elif any(word in text_lower for word in ['earth', 'continent', 'ocean']):
+            return self.knowledge_base['geography']['earth']
+        elif any(word in text_lower for word in ['climate', 'tropical', 'polar']):
+            return self.knowledge_base['geography']['climate']
+        elif any(word in text_lower for word in ['resources', 'natural resources', 'minerals']):
+            return self.knowledge_base['geography']['resources']
+        
+        # Study and motivation
+        elif any(word in text_lower for word in ['study', 'learn', 'tips', 'how to study']):
+            return random.choice(self.responses['study_tips'])
+        elif any(word in text_lower for word in ['exam', 'test', 'preparation']):
+            return random.choice(self.responses['exam_prep'])
+        elif any(word in text_lower for word in ['sad', 'difficult', 'hard', 'can\'t']):
+            return random.choice(self.responses['motivation'])
+        
+        # General math/science catch-all
+        elif any(word in text_lower for word in ['math', 'mathematics', 'calculation']):
+            return "Mathematics is a beautiful subject! I can help you with addition, subtraction, multiplication, division, fractions, algebra, geometry, and more. What specific topic would you like to learn about?"
+        elif any(word in text_lower for word in ['science', 'physics', 'chemistry', 'biology']):
+            return "Science is fascinating! I can explain concepts in physics (motion, force, energy), chemistry (atoms, elements, reactions), and biology (cells, genetics, evolution). What interests you?"
+        elif any(word in text_lower for word in ['english', 'language']):
+            return "English is a wonderful language! I can help with grammar, vocabulary, writing skills, and literature. What would you like to improve?"
+        elif any(word in text_lower for word in ['history', 'past', 'ancient', 'old']):
+            return "History teaches us about our past! I can tell you about ancient civilizations, medieval period, modern India, and world history. What period interests you?"
+        elif any(word in text_lower for word in ['geography', 'earth', 'map', 'country']):
+            return "Geography helps us understand our world! I can explain about Earth, climate, countries, natural resources, and more. What would you like to explore?"
+        
+        # Default intelligent response
+        else:
+            return f"That's a great question about '{user_input}'! I'm here to help you learn. Could you be more specific about what aspect you'd like to understand? I can help with math, science, English, history, geography, and study tips!"
     
     def speak_text(self, text, language):
         """Convert text to speech using gTTS"""

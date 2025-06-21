@@ -196,7 +196,7 @@ def show_quiz_menu():
     
     with col2:
         st.markdown("#### Quiz Settings")
-        num_questions = st.slider("Number of questions:", 5, 20, 10)
+        num_questions = st.slider("Number of questions:", 1, 10, 5)
     
     if st.button("🚀 Start Quiz", type="primary", use_container_width=True):
         questions = quiz_module.generate_quiz(
@@ -331,13 +331,16 @@ def study_materials_interface():
             
             # Download buttons for sample materials
             if content.get('sample_pdf'):
-                pdf_data = study_materials.generate_sample_pdf(subject, st.session_state.selected_class)
-                st.download_button(
-                    label=f"📄 Download {subject} Notes",
-                    data=pdf_data,
-                    file_name=f"{subject}_Class_{st.session_state.selected_class}_Notes.pdf",
-                    mime="application/pdf"
-                )
+                try:
+                    pdf_data = study_materials.generate_sample_pdf(subject, st.session_state.selected_class)
+                    st.download_button(
+                        label=f"📄 Download {subject} Notes",
+                        data=pdf_data,
+                        file_name=f"{subject}_Class_{st.session_state.selected_class}_Notes.pdf",
+                        mime="application/pdf"
+                    )
+                except Exception as e:
+                    st.warning(f"PDF generation temporarily unavailable for {subject}. Please try again later.")
             
             # Additional resources
             if content.get('resources'):

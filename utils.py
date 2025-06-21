@@ -27,22 +27,57 @@ def apply_theme(theme):
         st.markdown("""
         <style>
         .stApp {
-            background-color: #1e1e1e;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: #ffffff;
         }
         .stButton > button {
-            background-color: #4CAF50;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .stButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
         .stSelectbox > div > div {
             background-color: #2e2e2e;
             color: white;
+            border-radius: 8px;
         }
         .stTextInput > div > div > input {
             background-color: #2e2e2e;
             color: white;
+            border-radius: 8px;
+            border: 1px solid #4CAF50;
+        }
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 8px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            background-color: #2e2e2e;
+            border-radius: 8px;
+            color: white;
+        }
+        .stTabs [aria-selected="true"] {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+        .stProgress > div > div > div {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+        .stChatMessage {
+            background-color: #2e2e2e;
+            border-radius: 12px;
+            border: 1px solid #4CAF50;
+        }
+        .stExpander {
+            background-color: #2e2e2e;
+            border-radius: 8px;
+            border: 1px solid #4CAF50;
         }
         </style>
         """, unsafe_allow_html=True)
@@ -50,14 +85,57 @@ def apply_theme(theme):
         st.markdown("""
         <style>
         .stApp {
-            background-color: #ffffff;
-            color: #000000;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2c3e50;
         }
         .stButton > button {
-            background-color: #4CAF50;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .stButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .stSelectbox > div > div {
+            border-radius: 8px;
+            border: 1px solid #4CAF50;
+        }
+        .stTextInput > div > div > input {
+            border-radius: 8px;
+            border: 2px solid #4CAF50;
+        }
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 8px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .stTabs [aria-selected="true"] {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+        .stProgress > div > div > div {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+        .stChatMessage {
+            background-color: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stExpander {
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         </style>
         """, unsafe_allow_html=True)
