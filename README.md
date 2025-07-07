@@ -7,7 +7,7 @@ Vidya Sakhi is an educational platform designed for Indian school students (Clas
 - 📚 Study materials for all major subjects
 - 📊 Analytics and progress tracking for students and teachers
 - 🏅 Gamification: badges, leaderboard, and achievements
-- 💬 AI-powered chatbot with multi-language support
+- 💬 AI-powered multi-language support
 - ♿ Accessibility: large font, dyslexia-friendly font, voice output
 - 🔔 Notifications for new materials and quizzes
 - 📈 Teacher/admin dashboards
