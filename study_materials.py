@@ -1,5 +1,6 @@
 import streamlit as st
 import io
+from utils import t
 
 try:
     from reportlab.lib.pagesizes import letter, A4
@@ -15,481 +16,680 @@ class StudyMaterials:
         self.materials_data = {
             3: {
                 'Math': {
-                    'description': '📊 Basic arithmetic, shapes, and patterns for young learners',
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'Addition and Subtraction practice sheets',
-                        'Multiplication tables (1-10)',
-                        'Shape recognition activities',
-                        'Simple word problems'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/3rd%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Science': {
-                    'description': '🔬 Exploring the world around us - plants, animals, and nature',
+                    'description': '🌿 Official SCERT Telangana Environmental Studies textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'My Body parts and functions',
-                        'Animals and their homes',
-                        'Plants we eat',
-                        'Weather and seasons'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/3rd%20Class%20EVS%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'English': {
-                    'description': '📚 Building vocabulary and reading skills',
+                    'description': '📚 Official SCERT Telangana English textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'Phonics and letter sounds',
-                        'Simple story books',
-                        'Rhymes and poems',
-                        'Basic grammar rules'
-                    ]
-                }
-            },
-            6: {
-                'Math': {
-                    'description': '🧮 Integers, fractions, geometry and basic algebra',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Number system and operations',
-                        'Fractions and decimals',
-                        'Basic geometry concepts',
-                        'Simple equations'
-                    ]
-                },
-                'Science': {
-                    'description': '⚗️ Introduction to scientific concepts and experiments',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Matter and its properties',
-                        'Light and shadows',
-                        'Motion and force basics',
-                        'Living and non-living things'
-                    ]
-                },
-                'English': {
-                    'description': '📚 Grammar, vocabulary, and reading comprehension',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Parts of speech',
-                        'Sentence formation',
-                        'Reading comprehension',
-                        'Vocabulary building',
-                        'Basic essay writing'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/3rd%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Hindi': {
-                    'description': '🔤 हिंदी व्याकरण और साहित्य',
+                    'description': '📖 Official SCERT Telangana Hindi textbook',
                     'sample_pdf': True,
                     'resources': [
-                        'वर्ण विचार',
-                        'शब्द भेद',
-                        'वाक्य निर्माण',
-                        'छोटी कहानियां',
-                        'कविताएं'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/3rd%20Class%20Hindi%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
-                'History': {
-                    'description': '🏛️ Ancient civilizations and Indian history',
+                'Telugu': {
+                    'description': '📖 Official SCERT Telangana Telugu textbook',
                     'sample_pdf': True,
                     'resources': [
-                        'Indus Valley Civilization',
-                        'Vedic period',
-                        'Mauryan Empire',
-                        'Medieval India overview'
-                    ]
-                },
-                'Geography': {
-                    'description': '🌍 Earth, maps, and environmental studies',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Solar system basics',
-                        'Continents and oceans',
-                        'Climate and weather',
-                        'Natural resources'
-                    ]
-                },
-                'Civics': {
-                    'description': '🏛️ Understanding government and citizenship',
-                    'sample_pdf': True,
-                    'resources': [
-                        'What is government',
-                        'Local government',
-                        'State government',
-                        'Central government',
-                        'Rights and duties'
-                    ]
-                }
-            },
-            9: {
-                'Math': {
-                    'description': '📐 Advanced algebra, geometry, and coordinate geometry',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Real numbers and irrational numbers',
-                        'Polynomials and factorization',
-                        'Linear equations in two variables',
-                        'Quadrilaterals and triangles',
-                        'Statistics and probability'
-                    ]
-                },
-                'Physics': {
-                    'description': '⚡ Motion, force, work, energy and sound',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Motion in one dimension',
-                        'Force and laws of motion',
-                        'Gravitation',
-                        'Work and energy',
-                        'Sound waves'
-                    ]
-                },
-                'Chemistry': {
-                    'description': '🧪 Atoms, molecules, and chemical reactions',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Matter in our surroundings',
-                        'Atoms and molecules',
-                        'Structure of the atom',
-                        'Chemical reactions and equations'
-                    ]
-                },
-                'Biology': {
-                    'description': '🦠 Cell structure, tissues, and diversity in living organisms',
-                    'sample_pdf': True,
-                    'resources': [
-                        'The fundamental unit of life - Cell',
-                        'Tissues',
-                        'Diversity in living organisms',
-                        'Natural resources management'
-                    ]
-                }
-            },
-            11: {
-                'Physics': {
-                    'description': '🔬 Advanced mechanics, thermodynamics, and waves',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Physical world and measurement',
-                        'Kinematics and dynamics',
-                        'Work, energy and power',
-                        'System of particles and rotational motion',
-                        'Gravitation and oscillations',
-                        'Mechanical properties of solids and fluids',
-                        'Thermodynamics and kinetic theory',
-                        'Waves and acoustics'
-                    ]
-                },
-                'Chemistry': {
-                    'description': '⚛️ Atomic structure, bonding, and organic chemistry basics',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Some basic concepts of chemistry',
-                        'Structure of atom',
-                        'Classification of elements',
-                        'Chemical bonding and molecular structure',
-                        'States of matter',
-                        'Thermodynamics',
-                        'Equilibrium and redox reactions',
-                        'Organic chemistry - basic principles',
-                        'Hydrocarbons'
-                    ]
-                },
-                'Math': {
-                    'description': '🔢 Sets, functions, trigonometry, and coordinate geometry',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Sets and functions',
-                        'Trigonometric functions',
-                        'Principle of mathematical induction',
-                        'Complex numbers and quadratic equations',
-                        'Linear inequalities',
-                        'Permutations and combinations',
-                        'Binomial theorem',
-                        'Sequences and series',
-                        'Straight lines and conic sections',
-                        'Introduction to 3D geometry',
-                        'Limits and derivatives',
-                        'Mathematical reasoning',
-                        'Statistics and probability'
-                    ]
-                },
-                'Biology': {
-                    'description': '🧬 Plant and animal physiology, cell biology',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Diversity in living world',
-                        'Structural organization in animals and plants',
-                        'Cell structure and function',
-                        'Plant physiology',
-                        'Human physiology'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/3rd%20Class%20Telugu%20TM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 }
             },
             4: {
                 'Math': {
-                    'description': '🧮 Basic arithmetic and simple geometry',
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'Multiplication tables up to 12',
-                        'Division concepts',
-                        'Basic fractions',
-                        'Area and perimeter'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/4th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Science': {
-                    'description': '🔬 Animals, plants, and basic science concepts',
+                    'description': '🌿 Official SCERT Telangana Environmental Studies textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'Animal classification',
-                        'Plant life cycle',
-                        'Food chains',
-                        'Weather patterns'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/4th%20Class%20EVS%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'English': {
-                    'description': '📚 Reading, writing, and grammar',
+                    'description': '📚 Official SCERT Telangana English textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'Story comprehension',
-                        'Creative writing',
-                        'Grammar basics',
-                        'Vocabulary expansion'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/4th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Hindi': {
+                    'description': '📖 Official SCERT Telangana Hindi textbook',
+                    'sample_pdf': True,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/4th%20Class%20Hindi%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Telugu': {
+                    'description': '📖 Official SCERT Telangana Telugu textbook',
+                    'sample_pdf': True,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/4th%20Class%20Telugu%20TM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 }
             },
             5: {
                 'Math': {
-                    'description': '🧮 Advanced arithmetic and introduction to algebra',
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'Decimal operations',
-                        'Percentage basics',
-                        'Simple equations',
-                        'Data interpretation'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/5th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Science': {
-                    'description': '⚗️ Earth science and human body',
+                    'description': '🌿 Official SCERT Telangana Environmental Studies textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'Solar system',
-                        'Human body systems',
-                        'Natural disasters',
-                        'Environmental science'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/5th%20Class%20EVS%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'English': {
-                    'description': '📖 Literature and advanced grammar',
+                    'description': '📚 Official SCERT Telangana English textbook (English Medium)',
                     'sample_pdf': True,
                     'resources': [
-                        'Poetry appreciation',
-                        'Essay writing',
-                        'Advanced grammar',
-                        'Reading comprehension'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/5th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Hindi': {
+                    'description': '📖 Official SCERT Telangana Hindi textbook',
+                    'sample_pdf': True,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/5th%20Class%20Hindi%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Telugu': {
+                    'description': '📖 Official SCERT Telangana Telugu textbook',
+                    'sample_pdf': True,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/5th%20Class%20Telugu%20TM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                }
+            },
+            6: {
+                'Math': {
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/6th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Science': {
+                    'description': '🔬 Official SCERT Telangana General Science textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/6th%20Class%20General%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'English': {
+                    'description': '📘 Official SCERT Telangana English textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/6th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Social': {
+                    'description': '🌏 Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/6th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Hindi': {
+                    'description': '📝 Official SCERT Telangana Hindi textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/6th%20Class%20Hindi.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Telugu': {
+                    'description': '📗 Official SCERT Telangana Telugu textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/6th%20Class%20Telugu.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'GK': {
+                    'description': '🌐 General Knowledge resource (sample link)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://ncert.nic.in/textbook/pdf/legk1dd.zip',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Computers': {
+                    'description': '💻 Computer Studies resource (sample link)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://www.typingbaba.com/',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 }
             },
             7: {
                 'Math': {
-                    'description': '🧮 Algebra, geometry, and data handling',
-                    'sample_pdf': True,
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Linear equations',
-                        'Congruence of triangles',
-                        'Practical geometry',
-                        'Data handling and statistics'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/7th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Science': {
-                    'description': '⚗️ Physics and chemistry fundamentals',
-                    'sample_pdf': True,
+                    'description': '🔬 Official SCERT Telangana General Science textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Heat and temperature',
-                        'Acids, bases and salts',
-                        'Nutrition in plants',
-                        'Weather, climate and adaptations'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/7th%20Class%20General%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'English': {
-                    'description': '📚 Advanced language skills',
-                    'sample_pdf': True,
+                    'description': '📘 Official SCERT Telangana English textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Poetry and prose',
-                        'Grammar and composition',
-                        'Reading comprehension',
-                        'Creative writing'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/7th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Social': {
+                    'description': '🌏 Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/7th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Hindi': {
-                    'description': '🔤 हिंदी साहित्य और व्याकरण',
-                    'sample_pdf': True,
+                    'description': '📝 Official SCERT Telangana Hindi textbook',
+                    'sample_pdf': False,
                     'resources': [
-                        'गद्य और पद्य',
-                        'व्याकरण के नियम',
-                        'रचना कार्य',
-                        'भाषा विकास'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/7th%20Class%20Hindi.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Telugu': {
+                    'description': '📗 Official SCERT Telangana Telugu textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/7th%20Class%20Telugu.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'GK': {
+                    'description': '🌐 General Knowledge resource (sample link)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://ncert.nic.in/textbook/pdf/legk1dd.zip',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Computers': {
+                    'description': '💻 Computer Studies resource (sample link)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://www.typingbaba.com/',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 }
             },
             8: {
                 'Math': {
-                    'description': '📐 Advanced algebra and geometry',
-                    'sample_pdf': True,
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Rational numbers',
-                        'Linear equations in one variable',
-                        'Quadrilaterals',
-                        'Mensuration'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Physics': {
-                    'description': '⚡ Force, pressure, and energy',
-                    'sample_pdf': True,
+                    'description': '🔬 Official SCERT Telangana Physical Science textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Force and pressure',
-                        'Friction',
-                        'Sound',
-                        'Chemical effects of electric current'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Physical%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Chemistry': {
-                    'description': '🧪 Materials and chemical reactions',
-                    'sample_pdf': True,
+                    'description': '🧪 Official SCERT Telangana Physical Science textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Materials - metals and non-metals',
-                        'Coal and petroleum',
-                        'Combustion and flame',
-                        'Synthetic fibres and plastics'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Physical%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Biology': {
-                    'description': '🦠 Cell structure and life processes',
-                    'sample_pdf': True,
+                    'description': '🌱 Official SCERT Telangana Biological Science textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Cell - structure and functions',
-                        'Microorganisms',
-                        'Crop production and management',
-                        'Reproduction in animals'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Biological%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'English': {
+                    'description': '📘 Official SCERT Telangana English textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Hindi': {
+                    'description': '📝 Official SCERT Telangana Hindi textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Hindi.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Telugu': {
+                    'description': '📗 Official SCERT Telangana Telugu textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Telugu.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'History': {
+                    'description': '📜 Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Geography': {
+                    'description': '🗺️ Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Civics': {
+                    'description': '⚖️ Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/8th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                }
+            },
+            9: {
+                'Math': {
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Physics': {
+                    'description': '🔬 Official SCERT Telangana Physical Science textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Physical%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Chemistry': {
+                    'description': '🧪 Official SCERT Telangana Physical Science textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Physical%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Biology': {
+                    'description': '🌱 Official SCERT Telangana Biological Science textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Biological%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'English': {
+                    'description': '📘 Official SCERT Telangana English textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Hindi': {
+                    'description': '📝 Official SCERT Telangana Hindi textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Hindi.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Telugu': {
+                    'description': '📗 Official SCERT Telangana Telugu textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Telugu.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'History': {
+                    'description': '📜 Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Geography': {
+                    'description': '🗺️ Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Civics': {
+                    'description': '⚖️ Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/9th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 }
             },
             10: {
                 'Math': {
-                    'description': '🧮 Board level mathematics',
-                    'sample_pdf': True,
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Real numbers',
-                        'Polynomials',
-                        'Coordinate geometry',
-                        'Trigonometry',
-                        'Statistics and probability'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Physics': {
-                    'description': '⚡ Mechanics, optics, and electricity',
-                    'sample_pdf': True,
+                    'description': '🔬 Official SCERT Telangana Physical Science textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Light - reflection and refraction',
-                        'Electricity',
-                        'Magnetic effects of electric current',
-                        'Sources of energy'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Physical%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Chemistry': {
-                    'description': '⚛️ Chemical reactions and periodic classification',
-                    'sample_pdf': True,
+                    'description': '🧪 Official SCERT Telangana Physical Science textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Chemical reactions and equations',
-                        'Acids, bases and salts',
-                        'Metals and non-metals',
-                        'Carbon and its compounds'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Physical%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Biology': {
-                    'description': '🧬 Life processes and heredity',
-                    'sample_pdf': True,
+                    'description': '🌱 Official SCERT Telangana Biological Science textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Life processes',
-                        'Control and coordination',
-                        'Heredity and evolution',
-                        'Natural resource management'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Biological%20Science%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'English': {
+                    'description': '📘 Official SCERT Telangana English textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Hindi': {
+                    'description': '📝 Official SCERT Telangana Hindi textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Hindi.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Telugu': {
+                    'description': '📗 Official SCERT Telangana Telugu textbook',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Telugu.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'History': {
+                    'description': '📜 Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Geography': {
+                    'description': '🗺️ Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Civics': {
+                    'description': '⚖️ Official SCERT Telangana Social Studies textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/10th%20Class%20Social%20Studies%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                }
+            },
+            11: {
+                'Math': {
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/11th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Physics': {
+                    'description': '🔬 Official SCERT Telangana Physics textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/11th%20Class%20Physics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Chemistry': {
+                    'description': '🧪 Official SCERT Telangana Chemistry textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/11th%20Class%20Chemistry%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Biology': {
+                    'description': '🌱 Official SCERT Telangana Biology textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/11th%20Class%20Biology%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'English': {
+                    'description': '📘 Official SCERT Telangana English textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/11th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 }
             },
             12: {
-                'Physics': {
-                    'description': '🔬 Advanced physics for competitive exams',
-                    'sample_pdf': True,
+                'Math': {
+                    'description': '🧮 Official SCERT Telangana Mathematics textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Electrostatics',
-                        'Current electricity',
-                        'Magnetic effects of current',
-                        'Electromagnetic induction',
-                        'Alternating current',
-                        'Electromagnetic waves',
-                        'Ray optics and optical instruments',
-                        'Wave optics',
-                        'Dual nature of radiation',
-                        'Atoms and nuclei',
-                        'Semiconductor electronics'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/12th%20Class%20Mathematics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'Physics': {
+                    'description': '🔬 Official SCERT Telangana Physics textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/12th%20Class%20Physics%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Chemistry': {
-                    'description': '⚛️ Physical, organic, and inorganic chemistry',
-                    'sample_pdf': True,
+                    'description': '🧪 Official SCERT Telangana Chemistry textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Solid state',
-                        'Solutions',
-                        'Electrochemistry',
-                        'Chemical kinetics',
-                        'Surface chemistry',
-                        'Coordination compounds',
-                        'Haloalkanes and haloarenes',
-                        'Alcohols, phenols and ethers',
-                        'Aldehydes, ketones and carboxylic acids',
-                        'Amines'
-                    ]
-                },
-                'Math': {
-                    'description': '🔢 Advanced mathematics for engineering entrance',
-                    'sample_pdf': True,
-                    'resources': [
-                        'Relations and functions',
-                        'Inverse trigonometric functions',
-                        'Matrices and determinants',
-                        'Continuity and differentiability',
-                        'Applications of derivatives',
-                        'Integrals',
-                        'Applications of integrals',
-                        'Differential equations',
-                        'Vector algebra',
-                        'Three dimensional geometry',
-                        'Linear programming',
-                        'Probability'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/12th%20Class%20Chemistry%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 },
                 'Biology': {
-                    'description': '🧬 Advanced biology for medical entrance',
-                    'sample_pdf': True,
+                    'description': '🌱 Official SCERT Telangana Biology textbook (English Medium)',
+                    'sample_pdf': False,
                     'resources': [
-                        'Reproduction in organisms',
-                        'Sexual reproduction in flowering plants',
-                        'Human reproduction',
-                        'Reproductive health',
-                        'Principles of inheritance and variation',
-                        'Molecular basis of inheritance',
-                        'Evolution',
-                        'Human health and disease',
-                        'Microbes in human welfare',
-                        'Biotechnology principles',
-                        'Organisms and populations',
-                        'Ecosystem',
-                        'Biodiversity and conservation',
-                        'Environmental issues'
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/12th%20Class%20Biology%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
+                    ]
+                },
+                'English': {
+                    'description': '📘 Official SCERT Telangana English textbook (English Medium)',
+                    'sample_pdf': False,
+                    'resources': [
+                        'https://scert.telangana.gov.in/pdf/publication/ebooks2023/12th%20Class%20English%20EM.pdf',
+                        'https://scert.telangana.gov.in/ebooks.html'
                     ]
                 }
             }
         }
+        # Ensure all classes and subjects have at least a placeholder
+        HARDCODED_SUBJECTS = {
+            3: ['Math', 'Science', 'English', 'Hindi', 'GK', 'Computers', 'Sports', 'Value Education', 'Telugu'],
+            4: ['Math', 'Science', 'English', 'Hindi', 'GK', 'Computers', 'Sports', 'Value Education', 'Telugu'],
+            5: ['Math', 'Science', 'English', 'Hindi', 'GK', 'Computers', 'Sports', 'Value Education', 'Telugu'],
+            6: ['Math', 'Science', 'English', 'Social', 'Hindi', 'Telugu', 'GK', 'Computers'],
+            7: ['Math', 'Science', 'English', 'Social', 'Hindi', 'Telugu', 'GK', 'Computers'],
+            8: ['Math', 'Physics', 'Chemistry', 'Biology', 'English', 'Hindi', 'Telugu', 'History', 'Geography', 'Civics'],
+            9: ['Math', 'Physics', 'Chemistry', 'Biology', 'English', 'Hindi', 'Telugu', 'History', 'Geography', 'Civics'],
+            10: ['Math', 'Physics', 'Chemistry', 'Biology', 'English', 'Hindi', 'Telugu', 'History', 'Geography', 'Civics'],
+            11: ['Physics', 'Chemistry', 'Math', 'Biology', 'English'],
+            12: ['Physics', 'Chemistry', 'Math', 'Biology', 'English'],
+        }
+        for class_num, subjects in HARDCODED_SUBJECTS.items():
+            if class_num not in self.materials_data:
+                self.materials_data[class_num] = {}
+            for subject in subjects:
+                if subject not in self.materials_data[class_num]:
+                    self.materials_data[class_num][subject] = {
+                        'description': f'Sample study material for {subject} (Class {class_num}): This subject covers important concepts and practice topics to help you excel.',
+                        'sample_pdf': True,
+                        'resources': [
+                            f'Key concepts and practice questions for {subject}',
+                            f'Important notes and revision tips for {subject} (Class {class_num})'
+                        ]
+                    }
+        
+        # Add a 'videos' field to every subject in every class with relevant YouTube links for explanations.
+        for class_num, subjects in self.materials_data.items():
+            for subject, data in subjects.items():
+                videos = []
+                subj = subject.lower()
+                if subj == 'physics':
+                    videos = [
+                        'https://www.youtube.com/@t.srinivasacharychary7675/videos',
+                        'https://www.youtube.com/user/khanacademy',
+                        'https://www.youtube.com/c/LearnCBSE'
+                    ]
+                elif subj == 'math':
+                    videos = [
+                        'https://www.youtube.com/user/khanacademy',
+                        'https://www.youtube.com/c/LearnCBSE',
+                        'https://www.youtube.com/c/MathAntics'
+                    ]
+                elif subj == 'chemistry':
+                    videos = [
+                        'https://www.youtube.com/user/khanacademy',
+                        'https://www.youtube.com/c/LearnCBSE',
+                        'https://www.youtube.com/c/CrashCourse'
+                    ]
+                elif subj == 'biology':
+                    videos = [
+                        'https://www.youtube.com/user/khanacademy',
+                        'https://www.youtube.com/c/AmoebaSisters',
+                        'https://www.youtube.com/c/CrashCourse'
+                    ]
+                elif subj == 'english':
+                    videos = [
+                        'https://www.youtube.com/c/BritishCouncilLEARNENGLISH',
+                        'https://www.youtube.com/c/EnglishAddictwithMrDuncan',
+                        'https://www.youtube.com/c/LearnCBSE'
+                    ]
+                elif subj == 'hindi':
+                    videos = [
+                        'https://www.youtube.com/c/HindiVyakaran',
+                        'https://www.youtube.com/c/ExamपुरHindi'
+                    ]
+                elif subj == 'telugu':
+                    videos = [
+                        'https://www.youtube.com/c/LearnTeluguwithKaushik',
+                        'https://www.youtube.com/c/TeluguBadi'
+                    ]
+                elif subj == 'social':
+                    videos = [
+                        'https://www.youtube.com/c/LearnCBSE',
+                        'https://www.youtube.com/c/Unacademy'
+                    ]
+                elif subj == 'evs' or subj == 'science':
+                    videos = [
+                        'https://www.youtube.com/user/khanacademy',
+                        'https://www.youtube.com/c/LearnCBSE'
+                    ]
+                else:
+                    videos = [
+                        'https://www.youtube.com/user/khanacademy'
+                    ]
+                data['videos'] = videos
     
     def get_materials_for_class(self, class_num):
         """Get study materials for a specific class"""
@@ -694,3 +894,6 @@ Keep Learning! Keep Growing!
 """
         
         return content.encode('utf-8')
+
+    def show_materials_message(self):
+        st.info(t('scert_link_info'))

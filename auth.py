@@ -91,6 +91,24 @@ class AuthSystem:
             return True
         return False
 
+    def update_user(self, username, name=None, password=None, role=None, class_num=None):
+        """Update user details (admin only)"""
+        users = self.load_users()
+        if username not in users:
+            return False, "User not found"
+        if name:
+            users[username]["name"] = name
+        if password:
+            users[username]["password"] = self.hash_password(password)
+        if role and username != "admin":
+            users[username]["role"] = role
+        if role == "student" and class_num is not None:
+            users[username]["class"] = class_num
+        elif "class" in users[username] and (role != "student" or class_num is None):
+            users[username].pop("class", None)
+        self.save_users(users)
+        return True, "User updated successfully"
+
 def show_login():
     """Show login interface"""
     st.markdown("### 🔐 Login to Vidya Sakhi")
@@ -108,6 +126,8 @@ def show_login():
                 st.session_state.username = username
                 st.session_state.user_role = user["role"]
                 st.session_state.user_name = user["name"]
+                st.session_state.name = user["name"]
+                st.session_state.username = username
                 if "class" in user:
                     st.session_state.selected_class = user["class"]
                 st.success(f"Welcome {user['name']}!")
@@ -116,13 +136,6 @@ def show_login():
                 st.error("Invalid username or password")
     
     st.markdown("---")
-    st.markdown("**Demo Accounts:**")
-    st.info("""
-    **Admin:** username: `admin`, password: `admin123`
-    **Teacher:** username: `teacher1`, password: `teacher123`  
-    **Student:** username: `student1`, password: `student123`
-    """)
-    
     with st.expander("Register New Account"):
         show_register()
 
@@ -172,7 +185,23 @@ def show_admin_panel():
                 st.write(f"**Role:** {user_data['role']}")
                 if "class" in user_data:
                     st.write(f"**Class:** {user_data['class']}")
-                
+                # Edit form
+                with st.form(f"edit_{username}"):
+                    new_name = st.text_input("Full Name", value=user_data["name"], key=f"name_{username}")
+                    new_password = st.text_input("New Password (leave blank to keep current)", type="password", key=f"pwd_{username}")
+                    new_role = st.selectbox("Role", ["admin", "teacher", "student"], index=["admin", "teacher", "student"].index(user_data["role"]), key=f"role_{username}", disabled=(username=="admin"))
+                    new_class = None
+                    if new_role == "student":
+                        new_class = st.number_input("Class", min_value=3, max_value=12, value=user_data.get("class", 10), key=f"class_{username}")
+                    submitted = st.form_submit_button("Save Changes")
+                    if submitted:
+                        pw = new_password if new_password else None
+                        result, msg = auth.update_user(username, name=new_name, password=pw, role=new_role, class_num=new_class)
+                        if result:
+                            st.success("User updated successfully!")
+                            st.rerun()
+                        else:
+                            st.error(msg)
                 if username != "admin" and st.button(f"Delete {username}", key=f"del_{username}"):
                     if auth.delete_user(username):
                         st.success(f"User {username} deleted")

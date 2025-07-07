@@ -14,5 +14,17 @@
     "role": "student",
     "name": "Demo Student",
     "class": 10
+  },
+  "abcdef": {
+    "password": "$2b$12$A2gHU5Hs10UmSwEUvsOFUeFvy0rH3R88Vzdph4dydSHDE68FLbD1S",
+    "role": "student",
+    "name": "abcdef",
+    "class": 8
+  },
+  "parent1": {
+    "password": "$2b$12$wQv1QwQv1QwQv1QwQv1QwOQv1QwQv1QwQv1QwQv1QwQv1QwQv1Qw",
+    "role": "parent",
+    "name": "Demo Parent",
+    "child": "student1"
   }
 }

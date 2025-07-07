@@ -9,6 +9,7 @@ import os
 import requests
 import json
 from utils import get_language_code
+import importlib
 
 class ChatBot:
     def __init__(self):
@@ -100,6 +101,24 @@ class ChatBot:
             pygame.mixer.init()
         except:
             pass
+        
+        # Try to initialize pyttsx3 for better TTS
+        self.pyttsx3 = None
+        self.tts_voice_id = None
+        try:
+            pyttsx3 = importlib.import_module('pyttsx3')
+            self.pyttsx3 = pyttsx3.init()
+            # Try to select a fluent female voice (e.g., Microsoft Zira)
+            voices = self.pyttsx3.getProperty('voices')
+            for v in voices:
+                if 'zira' in v.name.lower() or (v.gender and v.gender.lower() == 'female'):
+                    self.tts_voice_id = v.id
+                    break
+            if self.tts_voice_id:
+                self.pyttsx3.setProperty('voice', self.tts_voice_id)
+            self.pyttsx3.setProperty('rate', 180)  # Set a fluent, natural rate
+        except Exception as e:
+            self.pyttsx3 = None
     
     def categorize_input(self, text):
         """Categorize user input to provide relevant responses"""
@@ -188,13 +207,9 @@ class ChatBot:
     
     def get_openrouter_response(self, user_input):
         """Get response from OpenRouter API"""
-        api_key = os.getenv("OPENROUTER_KEY")
-        if not api_key:
-            return None
-        
+        api_key = "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"
         # Get user's class for context
         user_class = st.session_state.get('selected_class', 5)
-        
         prompt = f"""You are Vidya Sakhi, a friendly AI tutor for Indian school students. 
         
 Student's class: {user_class}
@@ -206,10 +221,8 @@ Keep your answer:
 - Educational and informative
 - Encouraging and supportive
 - Specific to the question asked
-- Maximum 150 words
 
 If it's a subject question, provide clear explanations with examples."""
-
         try:
             response = requests.post(
                 "https://openrouter.ai/api/v1/chat/completions",
@@ -218,7 +231,7 @@ If it's a subject question, provide clear explanations with examples."""
                     "Content-Type": "application/json"
                 },
                 json={
-                    "model": "meta-llama/llama-3.2-3b-instruct:free",
+                    "model": "mistralai/mistral-7b-instruct",
                     "messages": [
                         {
                             "role": "system", 
@@ -229,19 +242,16 @@ If it's a subject question, provide clear explanations with examples."""
                             "content": prompt
                         }
                     ],
-                    "max_tokens": 150,
+                    "max_tokens": 600,
                     "temperature": 0.7
                 },
                 timeout=10
             )
-            
             if response.status_code == 200:
                 data = response.json()
                 return data['choices'][0]['message']['content'].strip()
-            
         except Exception as e:
             pass
-        
         return None
     
     def get_local_response(self, user_input):
@@ -355,46 +365,33 @@ If it's a subject question, provide clear explanations with examples."""
             return f"That's a great question about '{user_input}'! I'm here to help you learn. Could you be more specific about what aspect you'd like to understand? I can help with math, science, English, history, geography, and study tips!"
     
     def speak_text(self, text, language):
-        """Convert text to speech using gTTS"""
+        """Convert text to speech using gTTS only (for browser compatibility)"""
         if not st.session_state.voice_enabled:
             return
-            
         try:
-            # Get language code for gTTS
             lang_code = get_language_code(language)
             if lang_code == 'unknown':
                 lang_code = 'en'
-            
-            # Generate speech
             tts = gTTS(text=text, lang=lang_code, slow=False)
-            
-            # Create temporary file
+            import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as tmp_file:
                 tts.save(tmp_file.name)
-                
-                # Use Streamlit's audio player
                 try:
                     with open(tmp_file.name, 'rb') as audio_file:
                         audio_bytes = audio_file.read()
                         st.audio(audio_bytes, format='audio/mp3', autoplay=True)
                 except Exception as e:
-                    # Fallback to pygame
                     try:
                         pygame.mixer.music.load(tmp_file.name)
                         pygame.mixer.music.play()
-                        
-                        # Wait a bit for playback to start
                         import time
                         time.sleep(0.5)
                     except:
                         pass
-                
-                # Clean up
+                import os
                 try:
                     os.unlink(tmp_file.name)
                 except:
                     pass
-                    
         except Exception as e:
-            # Show warning in sidebar for voice issues
             st.sidebar.warning("Voice output temporarily unavailable")
