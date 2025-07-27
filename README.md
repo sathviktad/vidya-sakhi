@@ -72,7 +72,7 @@ streamlit run app.py
 #### 💬 Chat Interface  
 <p align="center">
   <img src="https://github.com/user-attachments/assets/f64fe12b-adaf-4a36-b33d-167fdc6dd712" width="800" /><br/>
-  <img src="https://github.com/user-attachments/assets/44683b0c-42ea-4606-b9e4-0654c582f6a6" width="400" />
+  <img src="https://github.com/user-attachments/assets/44683b0c-42ea-4606-b9e4-0654c582f6a6" width="800" />
   <img src="https://github.com/user-attachments/assets/bb86ee23-f0ef-414c-ac44-96b60e95e718" width="800" />
 </p>
 
