@@ -159,12 +159,19 @@ def show_student_interface():
             key="class_selector"
         )
         languages = get_language_options()
+        # Store previous language to detect change
+        prev_language = st.session_state.selected_language
         st.session_state.selected_language = st.selectbox(
             t('language'),
             options=list(languages.keys()),
             index=list(languages.keys()).index(st.session_state.selected_language),
             key="language_selector"
         )
+        # If language changes, show a fun animation!
+        if st.session_state.selected_language != prev_language:
+            st.snow()
+            st.rerun()
+
         theme_options = {"Light": "theme1", "Dark": "theme2"}
         selected_theme = st.selectbox(
             t('theme'),
@@ -317,12 +324,19 @@ def show_teacher_interface():
             key="class_selector"
         )
         languages = get_language_options()
+        # Store previous language to detect change
+        prev_language = st.session_state.selected_language
         st.session_state.selected_language = st.selectbox(
             t('language'),
             options=list(languages.keys()),
             index=list(languages.keys()).index(st.session_state.selected_language),
             key="language_selector"
         )
+        # If language changes, show a fun animation!
+        if st.session_state.selected_language != prev_language:
+            st.snow()
+            st.rerun()
+
         theme_options = {"Light": "theme1", "Dark": "theme2"}
         selected_theme = st.selectbox(
             t('theme'),
