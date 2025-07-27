@@ -37,8 +37,8 @@
 
 - **Frontend:** Streamlit + HTML/CSS + JS (for voice)
 - **Backend:** Python + DeepSeek AI (via Groq)
-- **Translation:** `translatepy`
-- **Text-to-Speech:** Google Text-to-Speech
+- **Translation:** Translatepy and Googletrans
+- **Text-to-Speech:** Google Text-to-Speech (gTTs)
 - **Hosting:** Streamlit Cloud (or localhost)
 - **Roles:** Student, Teacher, Admin
 
@@ -73,7 +73,7 @@ streamlit run app.py
 <p align="center">
   <img src="https://github.com/user-attachments/assets/f64fe12b-adaf-4a36-b33d-167fdc6dd712" width="800" /><br/>
   <img src="https://github.com/user-attachments/assets/44683b0c-42ea-4606-b9e4-0654c582f6a6" width="400" />
-  <img src="https://github.com/user-attachments/assets/bb86ee23-f0ef-414c-ac44-96b60e95e718" width="400" />
+  <img src="https://github.com/user-attachments/assets/bb86ee23-f0ef-414c-ac44-96b60e95e718" width="800" />
 </p>
 
 #### 📝 Quiz Module  
