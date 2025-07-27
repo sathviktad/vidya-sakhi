@@ -207,7 +207,7 @@ class ChatBot:
     
     def get_openrouter_response(self, user_input):
         """Get response from OpenRouter API"""
-        api_key = "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"
+        api_key = "OPENROUTER_API_KEY"
         # Get user's class for context
         user_class = st.session_state.get('selected_class', 5)
         prompt = f"""You are Vidya Sakhi, a friendly AI tutor for Indian school students. 
